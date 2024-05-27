@@ -6,6 +6,7 @@ import sys
 
 from isa import Opcode, Term, write_code
 
+labels = {}
 
 def get_meaningful_token(line):
     """Извлекаем из строки содержательный токен (метка или инструкция), удаляем
@@ -24,16 +25,12 @@ def translate_stage_1(text):
     смысловой нагрузки.
     """
     code = []
-    labels = {}
-    
-
-    for line_num, raw_line in enumerate(text.splitlines(), 1):
+    for line_num, raw_line in enumerate(text, 1):
         token = get_meaningful_token(raw_line)
         if token == "":
             continue
 
         pc = len(code)
-    
         if token.endswith(":"):  # токен содержит метку
             label = token.strip(":")
             assert label not in labels, "Redefinition of label: {}".format(label)
@@ -43,7 +40,7 @@ def translate_stage_1(text):
             assert len(sub_tokens) == 2, "Invalid instruction: {}".format(token)
             mnemonic, arg = sub_tokens
             opcode = Opcode(mnemonic)
-            assert opcode == Opcode.JZ or opcode == Opcode.JMP, "Only `jz` and `jnz` instructions take an argument"
+            assert(opcode in Opcode.opcodes_with_arg) #  "instructions take an argument"
             code.append({"index": pc, "opcode": opcode, "arg": arg, "term": Term(line_num, 0, token)})
         else:  # токен содержит инструкцию без операндов
             opcode = Opcode(token)
@@ -65,7 +62,6 @@ def translate_stage_2(labels, code):
 
 def translate(text:str):
     """Трансляция текста программы на Asm в машинный код.
-
     Выполняется в два прохода:
 
     1. Разбор текста на метки и инструкции.
@@ -81,12 +77,40 @@ def translate(text:str):
     return code
 
 
+def section_split(source):
+    data, code = [], []
+    section = None
+    for line in source:
+        if ".data" in line:
+            section = data
+        elif ".instructions" in line:
+            section = code
+        elif section is not None:
+            section.append(line)
+    print(data, code)
+    return data, code
+
+def trimmer(code):
+    result = []
+    for line in code:
+        if ";" in line:
+            line = line[: line.index(";")]
+        line = line.strip()
+        if line:
+            result.append(line)
+    return result
+
+
 def main(source: str, target: str):
     """Функция запуска транслятора. Параметры -- исходный и целевой файлы."""
     with open(source, encoding="utf-8") as f:
-        source = f.read()
+        source = f.read().split("\n")
 
-    code = translate(source)
+    source = trimmer(source)
+    data, code = section_split(source)
+    data = translate(data)
+
+    code = translate(code)
 
     write_code(target, code)
     print("source LoC:", len(source.split("\n")), "code instr:", len(code))

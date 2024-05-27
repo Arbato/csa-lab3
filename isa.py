@@ -4,10 +4,11 @@ from enum import Enum
 
 
 class Opcode(str, Enum):
-    HALT = "halt"
     HLT = "hlt"
     NOT = "not"
     NEG = "neg"
+    PUSH = "push"
+    POP = "pop"
     JMP = "jmp"
     JZ = "jz"
     JNZ = "jnz"
@@ -18,6 +19,9 @@ class Opcode(str, Enum):
     OR = "or"
     AND = "and"
     CMP = "cmp"
+
+    opcodes_with_arg = {PUSH,POP, JMP, JZ, JNZ, LD, ST, ADD, SUB, OR, AND,  CMP}
+
 
     def __str__(self):
         """Переопределение стандартного поведения `__str__` для `Enum`: вместо
@@ -50,8 +54,8 @@ def read_code(filename):
     Так как в файле хранятся не только простейшие типы (`Opcode`, `Term`), мы
     также выполняем конвертацию в объекты классов вручную (возможно, следует
     переписать через `JSONDecoder`, но это скорее усложнит код).
-
     """
+
     with open(filename, encoding="utf-8") as file:
         code = json.loads(file.read())
 
