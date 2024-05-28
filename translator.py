@@ -100,6 +100,8 @@ def trimmer(code):
             result.append(line)
     return result
 
+def translate_data(data: list):
+    
 
 def main(source: str, target: str):
     """Функция запуска транслятора. Параметры -- исходный и целевой файлы."""
@@ -108,7 +110,7 @@ def main(source: str, target: str):
 
     source = trimmer(source)
     data, code = section_split(source)
-    data = translate(data)
+    data = translate_data(data)
 
     code = translate(code)
 
