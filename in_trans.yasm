@@ -1,9 +1,9 @@
 .data
-limit: 4000  ;limit
-a: 1 ; a
-b: 1 ; b
-c: 0 ; c
-sum: 0 ; sum
+a: 1
+b: 1
+c: 0
+sum: 0
+limit: 10000
 .instructions
 loop:
 ld a
@@ -13,7 +13,7 @@ st c
 ;check 4million
 cmp limit
 jmp end
- 
+
 ld c
 add sum
 st sum

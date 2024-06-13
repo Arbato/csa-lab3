@@ -1,6 +1,6 @@
 # csa-lab3
  - Арбатова Ксения Владимировна, P3233
- - Вариант: `asm | acc | neum | hw | tick -> instr | struct | trap -> stream | mem | pstr | prob2 | spi`
+ - Вариант: `asm | acc | neum | hw | instr | struct | stream | mem | pstr | prob2 `
  - С упрощением
 
 ## Язык программирования
@@ -123,7 +123,7 @@ sum: 0
 
 ### DataPath
 
-
+![Alt text](./images/Untitled%20Diagram.drawio-2.png)
 
 Класс `data_path` реализует управление памятью и регистрами процессора.
  

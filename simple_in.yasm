@@ -1,0 +1,6 @@
+.data
+int: 123
+msg: "hi"
+msg2: "lol"
+msg3: "lol"
+.instructions
