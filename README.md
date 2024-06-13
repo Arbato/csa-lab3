@@ -11,8 +11,8 @@
 
 ``` enbf
 <program> ::=
-    "section .data" <newline> {<data>} <newline>
-    "section .instructions" <newline> {<instruction>} <newline> <EOF>
+    ".data" <newline> {<data>} <newline>
+    ".instructions" <newline> {<instruction>} <newline> <EOF>
     
 <data> ::= <label> ": " <value> [comment] <newline>
 <instruction> ::= <operand_address_command> <label>| "$"<number> [comment] <newline> |
@@ -20,9 +20,9 @@
                  <no_operand_command> [comment] <newline> 
 
 
-<no_operand_command> ::= "HLT" | "NOT" | "NEG" 
+<no_operand_command> ::= "HLT" | "NOT" | "NEG" | "POP"
 <operand_command> ::= "JMP" | "JZ" | "JNZ" | "ST" 
-operand_address_command ::= "LD" | "ADD" | "SUB" | "MUL" | "DIV" | "OR" | "AND" | "CMP"
+operand_address_command ::= "LD" | "ADD" | "SUB" | "MUL" | "DIV" | "OR" | "AND" | "CMP" | "PUSH"
 
 <value> ::= <number> | "'"<word>"'" 
 <label> ::= <word> 
@@ -43,13 +43,14 @@ operand_address_command ::= "LD" | "ADD" | "SUB" | "MUL" | "DIV" | "OR" | "AND" 
 
 ```asm
 .data
-A: 5
-B: 3
+A: 1
+B: 2
 sum: 0
 
 .instructions
     LD A
     ADD B
+    ADD $3
     ST sum
     HLT
 ```
@@ -58,7 +59,7 @@ sum: 0
 
 
 ## Организация памяти
-
+Фон Неймановская архитектура, вся память обьединена.
 
 ```
             memory
@@ -66,7 +67,6 @@ sum: 0
     |   JMP TO CODE   |
     +-----------------+
     |   STATIC DATA   |
-    |                 |
     |                 |
     |                 |
     +-----------------+
@@ -81,18 +81,26 @@ sum: 0
     +-----------------+
 
 ```
+Литералы в статической памяти располагаются в порядке их записи в коде.
 
+Машинное слово - 64 бита, беззнаковое.
+Так как архитектура аккумуляторная, программист взаимодействует только с аккумулятор, и команды имеют максимум 1 аргумент.
+Поток управления:
+- Условный переход (JZ)
+- Безусловный переход (JMP)
+- Инкремент IP (Instruction Pointer)
 
 ## Система команд
 Без аргументов:
 - HLT - завершение программы
 - NOT - логическое НЕ к аккумулятору, 0 -> 1 или !0 -> 0
 - NEG - изменить знак аккумулятора, N = !N
+- POP - снять значение со стека и записать в ACC
 Переход:
 - JMP <arg1> - безусловный переход к arg1
 - JZ <arg1> - если Z = 1, переход к arg1
 - JNZ <arg1> - если Z = 0, переход к arg1
-
+С аргументом:
 - LD <arg1> - записать из arg1 в ACC
 - ST <arg1> - записать из аккумулятора в arg1
 - ADD <arg1> - добавить к ACC arg1
@@ -102,11 +110,7 @@ sum: 0
 - OR <arg1> - побитовое ИЛИ ACC с arg1
 - AND <arg1> - побитовое И ACC с arg1
 - CMP <arg1> - Проставить флаги NZ как при операции ACC - arg1
-
-### Набор команд
-
-| Команда | Адресная | Ветвление | Количество тактов<br/>(Включая чтение команды и операнда) | Описание                                                               |
-|:--------|:---------|-----------|:----------------------------------------------------------|:-----------------------------------------------------------------------|
+- PUSH <arg1> - Записать значение ACC в стек
 
 ### Кодирование команд
 
