@@ -9,7 +9,7 @@
 
 #### Форма Бэкуса-Наура
 
-```enbf
+``` enbf
 <program> ::=
     "section .data" <newline> {<data>} <newline>
     "section .instructions" <newline> {<instruction>} <newline> <EOF>
@@ -24,16 +24,13 @@
 <operand_command> ::= "JMP" | "JZ" | "JNZ" | "ST" 
 operand_address_command ::= "LD" | "ADD" | "SUB" | "MUL" | "DIV" | "OR" | "AND" | "CMP"
 
-<value> ::= <number> | <word> 
+<value> ::= <number> | "'"<word>"'" 
 <label> ::= <word> 
-
-<метка переменной> ::= <слово>
-<переменная> ::= <число> | "'"<слово>"'"
 
 <comment> ::= ";" {<word> | <number>}
 
 <newline> ::= "\n"
-<word> ::= <буква> {<буква>}
+<word> ::= <letter> {<letter>}
 <number> ::= ["-"]<int> {<int>}
 <letter> ::= a | b | c | ... | z | A | B | C | ... | Z
 <int> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
