@@ -123,8 +123,7 @@ sum: 0
 
 ### DataPath
 
-![Alt text](./images/Untitled%20Diagram.drawio-2.png)
-
+![Alt text](./image/Untitled Diagram.jpg)
 Класс `data_path` реализует управление памятью и регистрами процессора.
  
 ### ControlUnit
