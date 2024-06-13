@@ -10,7 +10,33 @@
 #### Форма Бэкуса-Наура
 
 ```enbf
+<program> ::=
+    "section .data" <newline> {<data>} <newline>
+    "section .instructions" <newline> {<instruction>} <newline> <EOF>
+    
+<data> ::= <label> ": " <value> [comment] <newline>
+<instruction> ::= <operand_address_command> <label>| "$"<number> [comment] <newline> |
+                 <operand_command> <label>[comment] <newline> |
+                 <no_operand_command> [comment] <newline> 
 
+
+<no_operand_command> ::= "HLT" | "NOT" | "NEG" 
+<operand_command> ::= "JMP" | "JZ" | "JNZ" | "ST" 
+operand_address_command ::= "LD" | "ADD" | "SUB" | "MUL" | "DIV" | "OR" | "AND" | "CMP"
+
+<value> ::= <number> | <word> 
+<label> ::= <word> 
+
+<метка переменной> ::= <слово>
+<переменная> ::= <число> | "'"<слово>"'"
+
+<comment> ::= ";" {<word> | <number>}
+
+<newline> ::= "\n"
+<word> ::= <буква> {<буква>}
+<number> ::= ["-"]<int> {<int>}
+<letter> ::= a | b | c | ... | z | A | B | C | ... | Z
+<int> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 ```
 
 #### Объяснение
