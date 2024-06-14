@@ -47,16 +47,21 @@ def translate_stage_1(data, text):
             label = token.strip(":")
             assert label not in labels, "Redefinition of label: {}".format(label)
             labels[label] = pc
-        elif " " in token:  # токен содержит инструкцию с операндом (отделены пробелом)
+
+        if " " in token:  # токен содержит инструкцию с операндом (отделены пробелом)
             sub_tokens = token.split(" ")
             assert len(sub_tokens) == 2, "Invalid instruction: {}".format(token)
             mnemonic, arg = sub_tokens
             opcode = Opcode(mnemonic)
             assert(opcode in Opcode.opcodes_with_arg) #  "instructions take an argument"
-            code.append({"index": pc, "opcode": opcode, "arg": arg, "term": Term(line_num, 0, token)})
+            if '$' in arg:
+                code.append({"index": pc, "opcode": opcode, "arg": int(arg.strip("$")), "term": Term(line_num, 0, token), "direct": True})
+
+            else:
+                code.append({"index": pc, "opcode": opcode, "arg": arg, "term": Term(line_num, 0, token), "direct": False})
         else:  # токен содержит инструкцию без операндов
             opcode = Opcode(token)
-            code.append({"index": pc, "opcode": opcode, "term": Term(line_num, 0, token)})
+            code.append({"index": pc, "opcode": opcode, "term": Term(line_num, 0, token), "direct": False})
 
     return code
 
@@ -66,8 +71,9 @@ def translate_stage_2(labels, code: list):
     for instruction in code:
         if "arg" in instruction:
             label = instruction["arg"]
-            assert label in labels, "Label not defined: " + label
-            instruction["arg"] = labels[label]
+            if instruction["direct"]==False:
+                assert label in labels, "Label not defined: " + label
+                instruction["arg"] = labels[label]
     return code
 
 
