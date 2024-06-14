@@ -26,3 +26,39 @@ class DataPath:
         self.acc = 0
         self.input_buffer = input_buffer
         self.output_buffer = []
+
+
+class Datapath:
+    def __init__(self, memory_size=256, register_count=4):
+        # Initialize memory and registers
+        self.memory = [0] * memory_size
+        self.registers = [0] * register_count
+        self.PC = 0  # Program counter
+        
+    def load_memory(self, index, value):
+        # Load value into memory at specified index
+        self.memory[index] = value
+        
+    def load_register(self, reg, value):
+        # Load value into register at specified index
+        self.registers[reg] = value
+        
+    def get_memory(self, index):
+        # Retrieve value from memory at specified index
+        return self.memory[index]
+    
+    def get_register(self, reg):
+        # Retrieve value from register at specified index
+        return self.registers[reg]
+    
+    def increment_pc(self):
+        # Increment program counter
+        self.PC += 1
+    
+    def set_pc(self, value):
+        # Set program counter to a specific value
+        self.PC = value
+        
+    def get_pc(self):
+        # Get the current program counter value
+        return self.PC
