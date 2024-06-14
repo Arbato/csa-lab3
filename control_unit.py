@@ -1,12 +1,33 @@
-
-
-
-
 class ControlUnit:
-    def __init__(self, datapath, program):
+    commands = {"hlt": self.hlt, 
+                "not": self.nott,
+                "neg": self.neg,
+                "push": self.push,
+                "pop": self.pop,
+                "jmp": self.jmp,
+                "jz": self.jz,
+                "jnz": self.jnz,
+                "ld": self.ld,
+                "ldsp": self.ldsp,
+                "st": self.st,
+                "add": self.add,
+                "sub": self.sub,
+                "or": self.orr,
+                "and": self.andd,
+                "cmp": self.cmp,
+                "inc": self.inc,
+                "in": self.inn,
+                "out": self.out,
+                "ald": self.ald,
+                "dec": self.dec}
+
+    def __init__(self, datapath, program, inputs, limit = 5000):
         self.datapath = datapath
         self.program = program
-    
+        self.limit = limit
+        self.instr_counter = 0
+        self.inputs = inputs
+
     def fetch(self):
         # Fetch the instruction at the current PC
         pc = self.datapath.get_pc()
