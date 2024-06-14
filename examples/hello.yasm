@@ -1,0 +1,17 @@
+.data
+msg: "Hello world!"
+index: 1 
+
+.instructions
+loop:
+ld $msg
+add index
+ald
+out
+ld index_question
+sub $question
+jz end
+inc index_question
+jmp loop
+end:
+hlt
