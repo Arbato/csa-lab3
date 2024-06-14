@@ -13,14 +13,20 @@ class Opcode(str, Enum):
     JZ = "jz"
     JNZ = "jnz"
     LD = "ld"
+    LDSP = "ldsp"
     ST = "st"
     ADD = "add"
     SUB = "sub"
     OR = "or"
     AND = "and"
     CMP = "cmp"
-
-    opcodes_with_arg = {PUSH,POP, JMP, JZ, JNZ, LD, ST, ADD, SUB, OR, AND,  CMP}
+    INC = "inc"
+    IN = "in"
+    OUT = "out"
+    ALD = "ald"
+    DEC = "dec"
+    
+    opcodes_with_arg = {PUSH,POP, JMP, JZ, JNZ, LD, ST, ADD, SUB, OR, AND,  CMP, INC, DEC}
 
 
     def __str__(self):

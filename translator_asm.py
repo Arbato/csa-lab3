@@ -48,14 +48,19 @@ def translate_stage_1(data, text):
             assert label not in labels, "Redefinition of label: {}".format(label)
             labels[label] = pc
 
-        if " " in token:  # токен содержит инструкцию с операндом (отделены пробелом)
+        elif " " in token:  # токен содержит инструкцию с операндом (отделены пробелом)
             sub_tokens = token.split(" ")
             assert len(sub_tokens) == 2, "Invalid instruction: {}".format(token)
             mnemonic, arg = sub_tokens
             opcode = Opcode(mnemonic)
             assert(opcode in Opcode.opcodes_with_arg) #  "instructions take an argument"
             if '$' in arg:
-                code.append({"index": pc, "opcode": opcode, "arg": int(arg.strip("$")), "term": Term(line_num, 0, token), "direct": True})
+                try:
+
+                    code.append({"index": pc, "opcode": opcode, "arg": int(arg.strip("$")), "term": Term(line_num, 0, token), "direct": True})
+                except ValueError:
+                    code.append({"index": pc, "opcode": opcode, "arg": arg.strip("$"), "term": Term(line_num, 0, token), "direct": True})
+                    print(arg.strip("$"))
 
             else:
                 code.append({"index": pc, "opcode": opcode, "arg": arg, "term": Term(line_num, 0, token), "direct": False})
@@ -71,7 +76,7 @@ def translate_stage_2(labels, code: list):
     for instruction in code:
         if "arg" in instruction:
             label = instruction["arg"]
-            if instruction["direct"]==False:
+            if instruction["direct"]==False or isinstance(label, str):
                 assert label in labels, "Label not defined: " + label
                 instruction["arg"] = labels[label]
     return code

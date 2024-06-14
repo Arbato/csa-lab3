@@ -1,0 +1,47 @@
+
+.data
+question: "whats your name?"
+index_question: 0 
+greeting: "hello, "
+index_greeting: 0
+responce_index: 0
+.instructions
+loop:
+ld $question
+add index_question
+ald
+out
+ld index_question
+sub $question
+jz input
+inc index_question
+
+input:
+in
+jz answer
+push
+inc responce_index
+
+answer:
+
+hello_loop:
+ld $greeting
+add index_greeting
+ald
+out
+ld index_greeting
+sub $greeting
+jz name
+inc index_greeting
+
+name:
+ldsp
+add responce_index
+ald
+out
+dec responce_index
+jz end
+jmp name
+
+end:
+hlt
