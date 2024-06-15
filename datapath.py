@@ -1,8 +1,4 @@
-
-
-
-
-class Datapath:
+class DataPath:
     def __init__(self, memory_size=256):
         # Initialize memory and registers
         self.memory = [0] * memory_size
@@ -11,6 +7,8 @@ class Datapath:
         self.dr = 0
         self.ar = 0
         self.ip = 0
+        self.N = 0
+        self.Z = 0
 
     def __str__(self):
         return (
@@ -22,7 +20,15 @@ class Datapath:
         self.ip+=1
         return self.memory[self.ar]
         
-
+    def set_flags(self):
+        if self.acc == 0:
+            self.Z = 1
+        else:
+            self.Z = 0
+        if self.acc < 0:
+            self.N = 1
+        else:
+            self.N = 0
     def get_memory(self, index):
         # Retrieve value from memory at specified index
         return self.memory[index]
@@ -32,5 +38,3 @@ class Datapath:
         return self.registers[reg]
     
 
-d = Datapath()
-print(str(d))

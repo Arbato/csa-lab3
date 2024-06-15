@@ -8,10 +8,10 @@ ld $msg
 add index
 ald
 out
-ld index_question
-sub $question
+ld index
+sub $msg
 jz end
-inc index_question
+inc index
 jmp loop
 end:
 hlt

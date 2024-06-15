@@ -1,6 +1,15 @@
+from datapath import DataPath
 class ControlUnit:
-    commands = {"hlt": self.hlt, 
-                "not": self.nott,
+
+    running = False
+
+    def __init__(self, datapath: DataPath, program, inputs, limit = 5000):
+        self.datapath = datapath
+        self.program = program
+        self.limit = limit
+        self.instr_counter = 0
+        self.inputs = inputs
+        self.commands = {"hlt": self.hlt, 
                 "neg": self.neg,
                 "push": self.push,
                 "pop": self.pop,
@@ -20,61 +29,25 @@ class ControlUnit:
                 "out": self.out,
                 "ald": self.ald,
                 "dec": self.dec}
+        self.save_program()
 
-    def __init__(self, datapath, program, inputs, limit = 5000):
-        self.datapath = datapath
-        self.program = program
-        self.limit = limit
-        self.instr_counter = 0
-        self.inputs = inputs
+    def save_program(self):
+        for row in self.program:
+            if "opcode" in row:
+                self.datapath.memory[row["index"]] = {"opcode": row["opcode"], "arg": row["arg"], "term": row["term"], "direct": row["direct"]}
+            else:
+                self.datapath.memory[row["index"]] = {"arg" : row["arg"]}
+
+        
+        
 
     def fetch(self):
-        # Fetch the instruction at the current PC
-        pc = self.datapath.get_pc()
-        if pc < len(self.program):
-            return self.program[pc]
-        return None
+
     
-    def decode_and_execute(self, instruction):
-        # Decode the instruction and execute it
-        if 'opcode' in instruction:
-            opcode = instruction['opcode']
-            arg = instruction.get('arg', None)
-            
-            if opcode == 'jmp':
-                # Jump to the specified address
-                self.datapath.set_pc(arg)
-            elif opcode == 'ld':
-                # Load value into register
-                if instruction['direct']:
-                    value = arg
-                else:
-                    value = self.datapath.get_memory(arg)
-                self.datapath.load_register(instruction['term'][0], value)
-                self.datapath.increment_pc()
-            elif opcode == 'add':
-                # Add value to register
-                if instruction['direct']:
-                    value = arg
-                else:
-                    value = self.datapath.get_memory(arg)
-                reg = instruction['term'][0]
-                self.datapath.load_register(reg, self.datapath.get_register(reg) + value)
-                self.datapath.increment_pc()
-            elif opcode == 'st':
-                # Store value from register to memory
-                reg = instruction['term'][0]
-                self.datapath.load_memory(arg, self.datapath.get_register(reg))
-                self.datapath.increment_pc()
-            elif opcode == 'hlt':
-                # Halt the processor
-                print("Halting execution.")
-                return False  # Stop execution
-        else:
-            # No operation instruction (possibly just data)
-            self.datapath.increment_pc()
-        
-        return True  # Continue execution
+    def decode_execute(self, instruction):
+        if instruction["direct"]:
+            self.datapath.dr = 
+       
     
     def run(self):
         # Run the processor until halted
@@ -84,3 +57,71 @@ class ControlUnit:
             if instruction is None:
                 break  # End of program
             running = self.decode_and_execute(instruction)
+    
+    
+    def hlt(self):
+        running = False
+
+    def neg(self):
+        self.datapath.acc= - self.datapath.acc
+        self.datapath.set_flags()
+
+    def push(self):
+        obj = self.datapath.acc
+        self.datapath.memory[self.datapath.sp] = obj
+        self.datapath.sp -=1
+
+    def pop(self):
+        self.datapath.acc = self.datapath.memory[self.datapath.sp]
+        self.datapath.sp-=1
+        self.datapath.set_flags()
+
+    def jmp(self):
+        self.datapath.ip = self.datapath.dr
+    
+    def jz(self):
+        if self.datapath.Z == 1:
+            self.datapath.ip = self.datapath.dr
+
+    def jnz(self):
+        if self.datapath.Z == 0:
+            self.datapath.ip = self.datapath.dr
+    
+    def ld(self):
+        self.datapath.acc = self.datapath.memory[self.datapath.ar]
+        self.datapath.set_flags()
+        
+    def ldsp(self):
+        self.datapath.acc = self.datapath.sp
+    
+    def st(self):
+        self.datapath.memory[self.datapath.ar] = self.datapath.acc
+
+    def add(self):
+        self.datapath.acc += self.datapath.dr
+        self.datapath.set_flags()
+    
+    def sub(self):
+        self.datapath.acc -= self.datapath.dr
+        self.datapath.set_flags()
+
+    def cmp(self):
+        self.datapath.acc -= self.datapath.dr
+        self.datapath.set_flags()
+
+    def inc(self):
+        self.datapath.acc+=1
+
+    def dec(self):
+        self.datapath.acc-=1
+
+    def inn(self):
+        print("TODO")
+
+    def out(self):
+        print("TODO")
+    
+    def ald(self):
+        self.datapath.acc = self.datapath.memory[self.datapath.acc]
+
+

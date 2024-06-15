@@ -20,7 +20,7 @@
                  <no_operand_command> [comment] <newline> 
 
 
-<no_operand_command> ::= "hlt" | "not" | "neg" | "pop" | "ldsp" | "in"| "out" | "ald"
+<no_operand_command> ::= "hlt" | "neg" | "pop" | "ldsp" | "in"| "out" | "ald"
 <operand_command> ::= "jmp" | "jz" | "jnz" | "st" | "push"
 <operand_address_command> ::= "ld" | "add" | "sub" | "mul" | "div" | "or" | "and" | "cmp" | "push"
 
@@ -125,11 +125,15 @@ sum: 0
 - out - вывод данных из АСС
 - ldsp - загрузить указатель стека в АСС
 - ald - загрузить данные по адресу значения АСС
+
 Переход:
+
 - jmp <arg1> - безусловный переход к arg1
 - jz <arg1> - если Z = 1, переход к arg1
 - jnz <arg1> - если Z = 0, переход к arg1
+
 С аргументом:
+
 - ld <arg1> - записать из arg1 в ACC
 - ST <arg1> - записать из аккумулятора в arg1
 - add <arg1> - добавить к ACC arg1

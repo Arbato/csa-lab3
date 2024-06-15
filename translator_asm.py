@@ -127,7 +127,7 @@ def data_translate_stage_1(text):
                 label, arg = sub_tokens
                 labels[label] = pc
 
-                code.append({"index": pc, "arg": arg})
+                code.append({"index": pc, "arg": int(arg)})
             print(token, code,  "\n")
 
 
