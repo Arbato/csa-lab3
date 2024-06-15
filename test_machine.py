@@ -6,7 +6,7 @@ import os
 import tempfile
 
 import pytest
-from translator import perform_translator
+from translator_asm import translate
 import machine
 
 
@@ -27,7 +27,7 @@ def test_bar(golden, caplog):
             file.write(golden["in_stdio"])
 
         with contextlib.redirect_stdout(io.StringIO()) as stdout:
-            perform_translator(golden["source_code"], target_file)
+            translate(golden["source_code"], target_file)
             print("=" * 5)
             code_dict = json.load(open(target_file, encoding="utf-8"))
             machine.main(code_dict, input_token)
