@@ -11,6 +11,7 @@ class Opcode(str, Enum):
     JMP = "jmp"
     JZ = "jz"
     JNZ = "jnz"
+    JNE = "jne"
     LD = "ld"
     LDSP = "ldsp"
     ST = "st"
@@ -25,7 +26,8 @@ class Opcode(str, Enum):
     ALD = "ald"
     DEC = "dec"
     
-    opcodes_with_arg = {PUSH,POP, JMP, JZ, JNZ, LD, ST, ADD, SUB, OR, AND,  CMP, INC, DEC}
+    opcodes_with_arg = {PUSH,POP, JMP, JZ, JNZ, LD, ST, ADD, SUB, OR, AND,  CMP, INC, DEC, JNE}
+    direct_opcodes  = {JMP, JZ, INC, DEC, JNE}
 
 
     def __str__(self):

@@ -6,8 +6,7 @@ labels = {}
 
 
 def get_meaningful_token(line):
-    """Извлекаем из строки содержательный токен (метка или инструкция), удаляем
-    комментарии и пробелы в начале/конце строки.
+    """ Get rid of comment
     """
     return line.split(";", 1)[0].strip()
 
@@ -32,13 +31,12 @@ def section_split(source):
             section = code
         elif section is not None:
             section.append(line)
-    print(data, code)
     return data, code
 
 def translate_stage_1(data, text):
     code = []
     for line_num, raw_line in enumerate(text, 1):
-        token = get_meaningful_token(raw_line)
+        token = raw_line #get_meaningful_token(raw_line)
         if token == "":
             continue
 
@@ -54,13 +52,12 @@ def translate_stage_1(data, text):
             mnemonic, arg = sub_tokens
             opcode = Opcode(mnemonic)
             assert(opcode in Opcode.opcodes_with_arg) #  "instructions take an argument"
-            if '$' in arg:
+            if '$' in arg or opcode in Opcode.direct_opcodes:
                 try:
 
                     code.append({"index": pc, "opcode": opcode, "arg": int(arg.strip("$")), "term": Term(line_num, 0, token), "direct": True})
                 except ValueError:
                     code.append({"index": pc, "opcode": opcode, "arg": arg.strip("$"), "term": Term(line_num, 0, token), "direct": True})
-                    print(arg.strip("$"))
 
             else:
                 code.append({"index": pc, "opcode": opcode, "arg": arg, "term": Term(line_num, 0, token), "direct": False})
@@ -132,7 +129,7 @@ def data_translate_stage_1(text):
 
 
 
-    code.insert(0, {"index": 0, "opcode": "jmp",  "arg": len(code)+1 })
+    code.insert(0, {"index": 0, "opcode": "jmp",  "arg": len(code)+1 , "term": Term(line_num, 0, "Jump to start"), "direct": True})
 
     print(labels, code,  "\n")
     return code

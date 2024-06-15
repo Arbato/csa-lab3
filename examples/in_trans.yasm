@@ -3,16 +3,16 @@ a: 1
 b: 1
 c: 0
 sum: 0
-limit: 10000
+limit: 4000000
 .instructions
 loop:
+;check 4million
+cmp limit
+jne end
+
 ld a
 add b
 st c
-
-;check 4million
-cmp limit
-jmp end
 
 ld c
 add sum
@@ -28,4 +28,6 @@ st b
 jmp loop
 
 end:
+ld sum
+out
 hlt

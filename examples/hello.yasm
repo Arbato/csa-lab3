@@ -9,7 +9,7 @@ add index
 ald
 out
 ld index
-sub $msg
+sub msg
 jz end
 inc index
 jmp loop

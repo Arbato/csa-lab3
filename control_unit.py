@@ -1,6 +1,15 @@
 from datapath import DataPath
-class ControlUnit:
+import logging
 
+
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = "%(levelname)s %(name)s %(message)s",
+    handlers=[logging.StreamHandler()]
+)
+
+
+class ControlUnit:
     running = False
 
     def __init__(self, datapath: DataPath, program, inputs, limit = 5000):
@@ -21,46 +30,59 @@ class ControlUnit:
                 "st": self.st,
                 "add": self.add,
                 "sub": self.sub,
-                "or": self.orr,
-                "and": self.andd,
                 "cmp": self.cmp,
                 "inc": self.inc,
                 "in": self.inn,
                 "out": self.out,
                 "ald": self.ald,
-                "dec": self.dec}
+                "dec": self.dec,
+                "jne": self.jne}
         self.save_program()
 
     def save_program(self):
         for row in self.program:
-            if "opcode" in row:
+            if "opcode" in row and "arg" in row:
                 self.datapath.memory[row["index"]] = {"opcode": row["opcode"], "arg": row["arg"], "term": row["term"], "direct": row["direct"]}
+            elif "opcode" in row:
+                self.datapath.memory[row["index"]] = {"opcode": row["opcode"], "term": row["term"]}
             else:
                 self.datapath.memory[row["index"]] = {"arg" : row["arg"]}
 
-        
-        
-
-    def fetch(self):
 
     
     def decode_execute(self, instruction):
-        if instruction["direct"]:
-            self.datapath.dr = 
-       
+        logging.debug(self.datapath.__str__()+instruction["term"][2])
+
+        if "arg" in instruction:
+            self.datapath.dr = instruction["arg"]
+
+            if instruction["direct"]:
+                arg = self.datapath.dr
+            else:
+                arg = self.datapath.memory[self.datapath.dr]["arg"]
+
+            self.commands[instruction["opcode"]](arg)
+
+        else:
+            self.commands[instruction["opcode"]]()
+            
+
     
     def run(self):
         # Run the processor until halted
-        running = True
-        while running:
-            instruction = self.fetch()
+        self.running = True
+        while self.running:
+            instruction = self.datapath.memory[self.datapath.ar]
+
+            self.decode_execute(instruction)
+            self.datapath.ar = self.datapath.ip
+            self.datapath.ip+=1
             if instruction is None:
                 break  # End of program
-            running = self.decode_and_execute(instruction)
     
     
     def hlt(self):
-        running = False
+        self.running = False
 
     def neg(self):
         self.datapath.acc= - self.datapath.acc
@@ -76,10 +98,10 @@ class ControlUnit:
         self.datapath.sp-=1
         self.datapath.set_flags()
 
-    def jmp(self):
+    def jmp(self, arg):
         self.datapath.ip = self.datapath.dr
     
-    def jz(self):
+    def jz(self, arg):
         if self.datapath.Z == 1:
             self.datapath.ip = self.datapath.dr
 
@@ -87,30 +109,35 @@ class ControlUnit:
         if self.datapath.Z == 0:
             self.datapath.ip = self.datapath.dr
     
-    def ld(self):
-        self.datapath.acc = self.datapath.memory[self.datapath.ar]
+    def jne(self, arg):
+        if self.datapath.N == 0:
+            self.datapath.ip = self.datapath.dr
+    
+    def ld(self, arg):
+        self.datapath.acc = arg
         self.datapath.set_flags()
         
     def ldsp(self):
         self.datapath.acc = self.datapath.sp
     
-    def st(self):
-        self.datapath.memory[self.datapath.ar] = self.datapath.acc
+    def st(self, arg):
+        self.datapath.memory[self.datapath.dr]["arg"] = self.datapath.acc
 
-    def add(self):
-        self.datapath.acc += self.datapath.dr
+    def add(self, arg):
+        self.datapath.acc += arg
         self.datapath.set_flags()
     
-    def sub(self):
-        self.datapath.acc -= self.datapath.dr
+    def sub(self, arg):
+        self.datapath.acc -= arg
         self.datapath.set_flags()
 
-    def cmp(self):
-        self.datapath.acc -= self.datapath.dr
+
+    def cmp(self, arg):
+        self.datapath.acc -= arg
         self.datapath.set_flags()
 
-    def inc(self):
-        self.datapath.acc+=1
+    def inc(self, arg):
+        self.datapath.memory[self.datapath.dr]["arg"] +=1
 
     def dec(self):
         self.datapath.acc-=1
@@ -119,9 +146,9 @@ class ControlUnit:
         print("TODO")
 
     def out(self):
-        print("TODO")
+        print(self.datapath.acc)
     
     def ald(self):
-        self.datapath.acc = self.datapath.memory[self.datapath.acc]
+        self.datapath.acc = self.datapath.memory[self.datapath.acc]["arg"]
 
 
