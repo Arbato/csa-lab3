@@ -1,6 +1,7 @@
 import json
 from collections import namedtuple
 from enum import Enum
+from typing import ClassVar
 
 
 class Opcode(str, Enum):
@@ -25,10 +26,9 @@ class Opcode(str, Enum):
     OUT = "out"
     ALD = "ald"
     DEC = "dec"
-    
-    opcodes_with_arg = {PUSH,POP, JMP, JZ, JNZ, LD, ST, ADD, SUB, OR, AND,  CMP, INC, DEC, JNE}
-    direct_opcodes  = {JMP, JZ, INC, DEC, JNE}
 
+    opcodes_with_arg = ClassVar[{PUSH, POP, JMP, JZ, JNZ, LD, ST, ADD, SUB, OR, AND, CMP, INC, DEC, JNE}]
+    direct_opcodes = ClassVar[{JMP, JZ, INC, DEC, JNE}]
 
     def __str__(self):
         """Переопределение стандартного поведения `__str__` для `Enum`: вместо
@@ -63,6 +63,4 @@ def read_code(filename):
     переписать через `JSONDecoder`, но это скорее усложнит код).
     """
     with open(filename, encoding="utf-8") as file:
-        code = json.loads(file.read())
-
-    return code
+        return json.loads(file.read())

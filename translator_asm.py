@@ -6,8 +6,7 @@ labels = {}
 
 
 def get_meaningful_token(line):
-    """ Get rid of comment
-    """
+    """Get rid of comment"""
     return line.split(";", 1)[0].strip()
 
 
@@ -21,6 +20,7 @@ def trimmer(code):
             result.append(line)
     return result
 
+
 def section_split(source):
     data, code = [], []
     section = None
@@ -33,14 +33,15 @@ def section_split(source):
             section.append(line)
     return data, code
 
+
 def translate_stage_1(data, text):
     code = []
     for line_num, raw_line in enumerate(text, 1):
-        token = raw_line #get_meaningful_token(raw_line)
+        token = raw_line  # get_meaningful_token(raw_line)
         if token == "":
             continue
 
-        pc = len(code)+len(data)
+        pc = len(code) + len(data)
         if token.endswith(":"):  # токен содержит метку
             label = token.strip(":")
             assert label not in labels, "Redefinition of label: {}".format(label)
@@ -51,21 +52,39 @@ def translate_stage_1(data, text):
             assert len(sub_tokens) == 2, "Invalid instruction: {}".format(token)
             mnemonic, arg = sub_tokens
             opcode = Opcode(mnemonic)
-            assert(opcode in Opcode.opcodes_with_arg) #  "instructions take an argument"
-            if '$' in arg or opcode in Opcode.direct_opcodes:
+            assert opcode in Opcode.opcodes_with_arg  #  "instructions take an argument"
+            if "$" in arg or opcode in Opcode.direct_opcodes:
                 try:
-
-                    code.append({"index": pc, "opcode": opcode, "arg": int(arg.strip("$")), "term": Term(line_num, 0, token), "direct": True})
+                    code.append(
+                        {
+                            "index": pc,
+                            "opcode": opcode,
+                            "arg": int(arg.strip("$")),
+                            "term": Term(line_num, 0, token),
+                            "direct": True,
+                        }
+                    )
                 except ValueError:
-                    code.append({"index": pc, "opcode": opcode, "arg": arg.strip("$"), "term": Term(line_num, 0, token), "direct": True})
+                    code.append(
+                        {
+                            "index": pc,
+                            "opcode": opcode,
+                            "arg": arg.strip("$"),
+                            "term": Term(line_num, 0, token),
+                            "direct": True,
+                        }
+                    )
 
             else:
-                code.append({"index": pc, "opcode": opcode, "arg": arg, "term": Term(line_num, 0, token), "direct": False})
+                code.append(
+                    {"index": pc, "opcode": opcode, "arg": arg, "term": Term(line_num, 0, token), "direct": False}
+                )
         else:  # токен содержит инструкцию без операндов
             opcode = Opcode(token)
             code.append({"index": pc, "opcode": opcode, "term": Term(line_num, 0, token), "direct": False})
 
     return code
+
 
 def translate_stage_2(labels, code: list):
     """Второй проход транслятора. В уже определённые инструкции подставляются
@@ -73,12 +92,10 @@ def translate_stage_2(labels, code: list):
     for instruction in code:
         if "arg" in instruction:
             label = instruction["arg"]
-            if instruction["direct"]==False or isinstance(label, str):
+            if not instruction["direct"] or isinstance(label, str):
                 assert label in labels, "Label not defined: " + label
                 instruction["arg"] = labels[label]
     return code
-
-
 
 
 def data_translate_stage_1(text):
@@ -87,37 +104,36 @@ def data_translate_stage_1(text):
     ["int: 123",
     "msg: "hi""
     ]
-    to 
-    [{index 0, opcode: "jmp",  arg: 5 }, 
-     {index 1, arg: 123 }, 
+    to
+    [{index 0, opcode: "jmp",  arg: 5 },
+     {index 1, arg: 123 },
      {index 2, arg: 2},
      {index 3, arg: "h"},
      {index 4, arg: "i"}
      ]"""
-    
+
     code = []
     for line_num, raw_line in enumerate(text, 1):
         token = get_meaningful_token(raw_line)
         if token == "":
             continue
 
-        pc = len(code)+1
+        pc = len(code) + 1
         if ":" in token:
-            if "\"" in token:  # data is a string
-                sub_tokens  = token.split(": ")
+            if '"' in token:  # data is a string
+                sub_tokens = token.split(": ")
                 assert len(sub_tokens) == 2, "Invalid data entry: {}".format(token)
 
                 label, string = sub_tokens
                 assert label not in labels, "Redefinition of label: {}".format(label)
                 labels[label] = pc
-                string = string.strip("\"")
+                string = string.strip('"')
                 length = len(string)
                 code.append({"index": pc, "arg": length})
                 for letter in string:
-                    pc = len(code)+1
-                    code.append({"index": pc, "arg": letter })
-        
-        
+                    pc = len(code) + 1
+                    code.append({"index": pc, "arg": letter})
+
             elif " " in token:  # data is an int
                 sub_tokens = token.split(": ")
                 assert len(sub_tokens) == 2, "Invalid instruction: {}".format(token)
@@ -125,36 +141,35 @@ def data_translate_stage_1(text):
                 labels[label] = pc
 
                 code.append({"index": pc, "arg": int(arg)})
-            print(token, code,  "\n")
+            print(token, code, "\n")
 
+    code.insert(
+        0,
+        {"index": 0, "opcode": "jmp", "arg": len(code) + 1, "term": Term(line_num, 0, "Jump to start"), "direct": True},
+    )
 
-
-    code.insert(0, {"index": 0, "opcode": "jmp",  "arg": len(code)+1 , "term": Term(line_num, 0, "Jump to start"), "direct": True})
-
-    print(labels, code,  "\n")
+    print(labels, code, "\n")
     return code
-    
 
 
 def translate(source: list):
     data, code = section_split(source)
     print("section splity data+code")
-    print (data)
+    print(data)
     print(code)
     data = data_translate_stage_1(data)
     code = translate_stage_1(data, code)
 
     print("data+code after 1 stage")
-    print(data )
+    print(data)
     print(code)
 
     print()
     print("labels")
-    print (labels)
-
+    print(labels)
 
     full_code = translate_stage_2(labels, code)
-    return data+full_code
+    return data + full_code
 
 
 def main(source: str, target: str):
@@ -172,7 +187,3 @@ if __name__ == "__main__":
     assert len(sys.argv) == 3, "Wrong arguments: translator_asm.py <input_file> <target_file>"
     _, source, target = sys.argv
     main(source, target)
-
-
-
-   

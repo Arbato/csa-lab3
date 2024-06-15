@@ -10,24 +10,19 @@ source_code: |
   ;check 4million
   cmp limit
   jne end
-
   ld a
   add b
   st c
-
   ld c
   add sum
   st sum
-
   ld b
   add c
   st a
-
   ld c
   add a
   st b
   jmp loop
-
   end:
   ld sum
   out

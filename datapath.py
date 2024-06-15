@@ -12,14 +12,15 @@ class DataPath:
 
     def __str__(self):
         return (
-            f"ACC: {self.acc:10} |" f"AR: {self.ar:5} |" f"IP: {self.ip:5} |" f"DR: {self.dr:10} |" f"SP: {self.sp:5} |")
+            f"ACC: {self.acc:10} |" f"AR: {self.ar:5} |" f"IP: {self.ip:5} |" f"DR: {self.dr:10} |" f"SP: {self.sp:5} |"
+        )
 
     def load_instr_from_memory(self):
         # Load instruction from memory in adress register
         self.ar = self.ip
-        self.ip+=1
+        self.ip += 1
         return self.memory[self.ar]
-        
+
     def set_flags(self):
         if self.acc == 0:
             self.Z = 1
@@ -29,12 +30,11 @@ class DataPath:
             self.N = 1
         else:
             self.N = 0
+
     def get_memory(self, index):
         # Retrieve value from memory at specified index
         return self.memory[index]
-    
+
     def get_register(self, reg):
         # Retrieve value from register at specified index
         return self.registers[reg]
-    
-

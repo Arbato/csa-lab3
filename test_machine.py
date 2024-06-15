@@ -5,9 +5,9 @@ import logging
 import os
 import tempfile
 
+import machine
 import pytest
 from translator_asm import translate
-import machine
 
 
 @pytest.mark.golden_test("golden/*.yml")
@@ -21,7 +21,7 @@ def test_bar(golden, caplog):
         input_token.append(0)
 
         with open(source_file, "w", encoding="utf-8") as file:
-            file.write(golden["in_source"])
+            file.write(golden["source_code"])
 
         with open(input_token, "w", encoding="utf-8") as file:
             file.write(golden["in_stdio"])
@@ -38,3 +38,6 @@ def test_bar(golden, caplog):
         assert code == golden.out["out_code"]
         assert stdout.getvalue().rstrip("\n") == golden.out["stdout"]
         assert caplog.text.rstrip("\n") == golden.out["out_log"]
+
+
+print("asdfx")
