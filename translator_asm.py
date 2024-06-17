@@ -141,44 +141,31 @@ def data_translate_stage_1(text):
                 labels[label] = pc
 
                 code.append({"index": pc, "arg": int(arg)})
-            print(token, code, "\n")
 
     code.insert(
         0,
         {"index": 0, "opcode": "jmp", "arg": len(code) + 1, "term": Term(line_num, 0, "Jump to start"), "direct": True},
     )
 
-    print(labels, code, "\n")
     return code
 
 
 def translate(source: list):
     data, code = section_split(source)
-    print("section splity data+code")
-    print(data)
-    print(code)
+
     data = data_translate_stage_1(data)
     code = translate_stage_1(data, code)
-
-    print("data+code after 1 stage")
-    print(data)
-    print(code)
-
-    print()
-    print("labels")
-    print(labels)
 
     full_code = translate_stage_2(labels, code)
     return data + full_code
 
 
 def main(source: str, target: str):
-    """Функция запуска транслятора. Параметры -- исходный и целевой файлы."""
+    """Функция запуска транслятора. Параметры -- p."""
     with open(source, encoding="utf-8") as f:
         lines = f.read().split("\n")
     lines = trimmer(lines)
     code = translate(lines)
-    print("code in main ", code, "\n")
     write_code(target, code)
     print("source LoC:", len(source), "code instr:", len(code))
 

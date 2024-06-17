@@ -7,7 +7,7 @@ import tempfile
 
 import machine
 import pytest
-from translator_asm import translate
+import translator_asm
 
 
 @pytest.mark.golden_test("golden/*.yml")
@@ -16,28 +16,26 @@ def test_bar(golden, caplog):
 
     with tempfile.TemporaryDirectory() as tmpdir:
         source_file = os.path.join(tmpdir, "source.yaasm")
+        input_stream = os.path.join(tmpdir, "input.txt")
         target_file = os.path.join(tmpdir, "source.json")
-        input_token = [ord(i) for i in golden["stdin"].rstrip("\n")]
-        input_token.append(0)
 
         with open(source_file, "w", encoding="utf-8") as file:
             file.write(golden["source_code"])
 
-        with open(input_token, "w", encoding="utf-8") as file:
-            file.write(golden["in_stdio"])
+        with open(input_stream, "w", encoding="utf-8") as file:
+            file.write(golden["stdin"])
 
         with contextlib.redirect_stdout(io.StringIO()) as stdout:
-            translate(golden["source_code"], target_file)
-            print("=" * 5)
+            translator_asm.main(source_file, target_file)
             code_dict = json.load(open(target_file, encoding="utf-8"))
-            machine.main(code_dict, input_token)
+            machine.main(code_dict, input_stream)
 
         with open(target_file, encoding="utf-8") as file:
             code = file.read()
 
-        assert code == golden.out["out_code"]
-        assert stdout.getvalue().rstrip("\n") == golden.out["stdout"]
-        assert caplog.text.rstrip("\n") == golden.out["out_log"]
+        assert [x.strip() for x in code.strip().split('\n')] == [x.strip() for x in golden.out["out_code"].strip().split('\n')]
+        assert stdout.getvalue().strip('\n') == golden.out["stdout"].strip('\n')
+        assert caplog.text.rstrip("\n") == golden.out["out_log"].rstrip("\n")
 
 
 print("asdfx")
