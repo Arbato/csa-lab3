@@ -1,0 +1,281 @@
+source_code: |
+  .data
+    message_index: -1
+  .instructions
+  read_input:
+    in
+    cmp $10
+    jz print
+    push
+    inc message_index
+  jmp read_input
+
+  print:
+    ldsp
+    add message_index
+    ald
+    out
+    dec message_index
+    jz done 
+  jmp print
+  done:
+    hlt
+
+stdin: |
+  abcdefg,hijklmnop
+stdout: |
+  source LoC: 29 code instr: 16
+  abcdefg,hijklmnop
+
+out_code: |
+  [{"index": 0, "opcode": "jmp", "arg": 2, "term": [1, 0, "Jump to start"], "direct": true},
+  {"index": 1, "arg": -1},
+  {"index": 2, "opcode": "in", "term": [2, 0, "in"], "direct": false},
+  {"index": 3, "opcode": "cmp", "arg": 10, "term": [3, 0, "cmp $10"], "direct": true},
+  {"index": 4, "opcode": "jz", "arg": 8, "term": [4, 0, "jz print"], "direct": true},
+  {"index": 5, "opcode": "push", "term": [5, 0, "push"], "direct": false},
+  {"index": 6, "opcode": "inc", "arg": 1, "term": [6, 0, "inc message_index"], "direct": true},
+  {"index": 7, "opcode": "jmp", "arg": 2, "term": [7, 0, "jmp read_input"], "direct": true},
+  {"index": 8, "opcode": "ldsp", "term": [9, 0, "ldsp"], "direct": false},
+  {"index": 9, "opcode": "add", "arg": 1, "term": [10, 0, "add message_index"], "direct": false},
+  {"index": 10, "opcode": "ald", "term": [11, 0, "ald"], "direct": false},
+  {"index": 11, "opcode": "out", "term": [12, 0, "out"], "direct": false},
+  {"index": 12, "opcode": "dec", "arg": 1, "term": [13, 0, "dec message_index"], "direct": true},
+  {"index": 13, "opcode": "jz", "arg": 15, "term": [14, 0, "jz done"], "direct": true},
+  {"index": 14, "opcode": "jmp", "arg": 8, "term": [15, 0, "jmp print"], "direct": true},
+  {"index": 15, "opcode": "hlt", "term": [17, 0, "hlt"], "direct": false}]
+
+out_log: |
+  DEBUG   control_unit:decode_execute ACC:          0 |AR:     0 |IP:     0 |DR:          0 |SP:   256 |Jump to start
+  DEBUG   control_unit:decode_execute ACC:          0 |AR:     2 |IP:     3 |DR:          2 |SP:   256 |in
+  DEBUG   control_unit:decode_execute ACC: a          |AR:     3 |IP:     4 |DR:          2 |SP:   256 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:         87 |AR:     4 |IP:     5 |DR:         10 |SP:   256 |jz print
+  DEBUG   control_unit:decode_execute ACC:         87 |AR:     5 |IP:     6 |DR:          8 |SP:   256 |push
+  DEBUG   control_unit:decode_execute ACC:         87 |AR:     6 |IP:     7 |DR:          8 |SP:   255 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:         87 |AR:     7 |IP:     8 |DR:          1 |SP:   255 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:         87 |AR:     2 |IP:     3 |DR:          2 |SP:   255 |in
+  DEBUG   control_unit:decode_execute ACC: b          |AR:     3 |IP:     4 |DR:          2 |SP:   255 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:         88 |AR:     4 |IP:     5 |DR:         10 |SP:   255 |jz print
+  DEBUG   control_unit:decode_execute ACC:         88 |AR:     5 |IP:     6 |DR:          8 |SP:   255 |push
+  DEBUG   control_unit:decode_execute ACC:         88 |AR:     6 |IP:     7 |DR:          8 |SP:   254 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:         88 |AR:     7 |IP:     8 |DR:          1 |SP:   254 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:         88 |AR:     2 |IP:     3 |DR:          2 |SP:   254 |in
+  DEBUG   control_unit:decode_execute ACC: c          |AR:     3 |IP:     4 |DR:          2 |SP:   254 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:     4 |IP:     5 |DR:         10 |SP:   254 |jz print
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:     5 |IP:     6 |DR:          8 |SP:   254 |push
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:     6 |IP:     7 |DR:          8 |SP:   253 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:     7 |IP:     8 |DR:          1 |SP:   253 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:     2 |IP:     3 |DR:          2 |SP:   253 |in
+  DEBUG   control_unit:decode_execute ACC: d          |AR:     3 |IP:     4 |DR:          2 |SP:   253 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:         90 |AR:     4 |IP:     5 |DR:         10 |SP:   253 |jz print
+  DEBUG   control_unit:decode_execute ACC:         90 |AR:     5 |IP:     6 |DR:          8 |SP:   253 |push
+  DEBUG   control_unit:decode_execute ACC:         90 |AR:     6 |IP:     7 |DR:          8 |SP:   252 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:         90 |AR:     7 |IP:     8 |DR:          1 |SP:   252 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:         90 |AR:     2 |IP:     3 |DR:          2 |SP:   252 |in
+  DEBUG   control_unit:decode_execute ACC: e          |AR:     3 |IP:     4 |DR:          2 |SP:   252 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:         91 |AR:     4 |IP:     5 |DR:         10 |SP:   252 |jz print
+  DEBUG   control_unit:decode_execute ACC:         91 |AR:     5 |IP:     6 |DR:          8 |SP:   252 |push
+  DEBUG   control_unit:decode_execute ACC:         91 |AR:     6 |IP:     7 |DR:          8 |SP:   251 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:         91 |AR:     7 |IP:     8 |DR:          1 |SP:   251 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:         91 |AR:     2 |IP:     3 |DR:          2 |SP:   251 |in
+  DEBUG   control_unit:decode_execute ACC: f          |AR:     3 |IP:     4 |DR:          2 |SP:   251 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:         92 |AR:     4 |IP:     5 |DR:         10 |SP:   251 |jz print
+  DEBUG   control_unit:decode_execute ACC:         92 |AR:     5 |IP:     6 |DR:          8 |SP:   251 |push
+  DEBUG   control_unit:decode_execute ACC:         92 |AR:     6 |IP:     7 |DR:          8 |SP:   250 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:         92 |AR:     7 |IP:     8 |DR:          1 |SP:   250 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:         92 |AR:     2 |IP:     3 |DR:          2 |SP:   250 |in
+  DEBUG   control_unit:decode_execute ACC: g          |AR:     3 |IP:     4 |DR:          2 |SP:   250 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:         93 |AR:     4 |IP:     5 |DR:         10 |SP:   250 |jz print
+  DEBUG   control_unit:decode_execute ACC:         93 |AR:     5 |IP:     6 |DR:          8 |SP:   250 |push
+  DEBUG   control_unit:decode_execute ACC:         93 |AR:     6 |IP:     7 |DR:          8 |SP:   249 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:         93 |AR:     7 |IP:     8 |DR:          1 |SP:   249 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:         93 |AR:     2 |IP:     3 |DR:          2 |SP:   249 |in
+  DEBUG   control_unit:decode_execute ACC: ,          |AR:     3 |IP:     4 |DR:          2 |SP:   249 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:         34 |AR:     4 |IP:     5 |DR:         10 |SP:   249 |jz print
+  DEBUG   control_unit:decode_execute ACC:         34 |AR:     5 |IP:     6 |DR:          8 |SP:   249 |push
+  DEBUG   control_unit:decode_execute ACC:         34 |AR:     6 |IP:     7 |DR:          8 |SP:   248 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:         34 |AR:     7 |IP:     8 |DR:          1 |SP:   248 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:         34 |AR:     2 |IP:     3 |DR:          2 |SP:   248 |in
+  DEBUG   control_unit:decode_execute ACC: h          |AR:     3 |IP:     4 |DR:          2 |SP:   248 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:         94 |AR:     4 |IP:     5 |DR:         10 |SP:   248 |jz print
+  DEBUG   control_unit:decode_execute ACC:         94 |AR:     5 |IP:     6 |DR:          8 |SP:   248 |push
+  DEBUG   control_unit:decode_execute ACC:         94 |AR:     6 |IP:     7 |DR:          8 |SP:   247 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:         94 |AR:     7 |IP:     8 |DR:          1 |SP:   247 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:         94 |AR:     2 |IP:     3 |DR:          2 |SP:   247 |in
+  DEBUG   control_unit:decode_execute ACC: i          |AR:     3 |IP:     4 |DR:          2 |SP:   247 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:         95 |AR:     4 |IP:     5 |DR:         10 |SP:   247 |jz print
+  DEBUG   control_unit:decode_execute ACC:         95 |AR:     5 |IP:     6 |DR:          8 |SP:   247 |push
+  DEBUG   control_unit:decode_execute ACC:         95 |AR:     6 |IP:     7 |DR:          8 |SP:   246 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:         95 |AR:     7 |IP:     8 |DR:          1 |SP:   246 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:         95 |AR:     2 |IP:     3 |DR:          2 |SP:   246 |in
+  DEBUG   control_unit:decode_execute ACC: j          |AR:     3 |IP:     4 |DR:          2 |SP:   246 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:         96 |AR:     4 |IP:     5 |DR:         10 |SP:   246 |jz print
+  DEBUG   control_unit:decode_execute ACC:         96 |AR:     5 |IP:     6 |DR:          8 |SP:   246 |push
+  DEBUG   control_unit:decode_execute ACC:         96 |AR:     6 |IP:     7 |DR:          8 |SP:   245 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:         96 |AR:     7 |IP:     8 |DR:          1 |SP:   245 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:         96 |AR:     2 |IP:     3 |DR:          2 |SP:   245 |in
+  DEBUG   control_unit:decode_execute ACC: k          |AR:     3 |IP:     4 |DR:          2 |SP:   245 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:         97 |AR:     4 |IP:     5 |DR:         10 |SP:   245 |jz print
+  DEBUG   control_unit:decode_execute ACC:         97 |AR:     5 |IP:     6 |DR:          8 |SP:   245 |push
+  DEBUG   control_unit:decode_execute ACC:         97 |AR:     6 |IP:     7 |DR:          8 |SP:   244 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:         97 |AR:     7 |IP:     8 |DR:          1 |SP:   244 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:         97 |AR:     2 |IP:     3 |DR:          2 |SP:   244 |in
+  DEBUG   control_unit:decode_execute ACC: l          |AR:     3 |IP:     4 |DR:          2 |SP:   244 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:         98 |AR:     4 |IP:     5 |DR:         10 |SP:   244 |jz print
+  DEBUG   control_unit:decode_execute ACC:         98 |AR:     5 |IP:     6 |DR:          8 |SP:   244 |push
+  DEBUG   control_unit:decode_execute ACC:         98 |AR:     6 |IP:     7 |DR:          8 |SP:   243 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:         98 |AR:     7 |IP:     8 |DR:          1 |SP:   243 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:         98 |AR:     2 |IP:     3 |DR:          2 |SP:   243 |in
+  DEBUG   control_unit:decode_execute ACC: m          |AR:     3 |IP:     4 |DR:          2 |SP:   243 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:         99 |AR:     4 |IP:     5 |DR:         10 |SP:   243 |jz print
+  DEBUG   control_unit:decode_execute ACC:         99 |AR:     5 |IP:     6 |DR:          8 |SP:   243 |push
+  DEBUG   control_unit:decode_execute ACC:         99 |AR:     6 |IP:     7 |DR:          8 |SP:   242 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:         99 |AR:     7 |IP:     8 |DR:          1 |SP:   242 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:         99 |AR:     2 |IP:     3 |DR:          2 |SP:   242 |in
+  DEBUG   control_unit:decode_execute ACC: n          |AR:     3 |IP:     4 |DR:          2 |SP:   242 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:        100 |AR:     4 |IP:     5 |DR:         10 |SP:   242 |jz print
+  DEBUG   control_unit:decode_execute ACC:        100 |AR:     5 |IP:     6 |DR:          8 |SP:   242 |push
+  DEBUG   control_unit:decode_execute ACC:        100 |AR:     6 |IP:     7 |DR:          8 |SP:   241 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:        100 |AR:     7 |IP:     8 |DR:          1 |SP:   241 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:        100 |AR:     2 |IP:     3 |DR:          2 |SP:   241 |in
+  DEBUG   control_unit:decode_execute ACC: o          |AR:     3 |IP:     4 |DR:          2 |SP:   241 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:        101 |AR:     4 |IP:     5 |DR:         10 |SP:   241 |jz print
+  DEBUG   control_unit:decode_execute ACC:        101 |AR:     5 |IP:     6 |DR:          8 |SP:   241 |push
+  DEBUG   control_unit:decode_execute ACC:        101 |AR:     6 |IP:     7 |DR:          8 |SP:   240 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:        101 |AR:     7 |IP:     8 |DR:          1 |SP:   240 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:        101 |AR:     2 |IP:     3 |DR:          2 |SP:   240 |in
+  DEBUG   control_unit:decode_execute ACC: p          |AR:     3 |IP:     4 |DR:          2 |SP:   240 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:        102 |AR:     4 |IP:     5 |DR:         10 |SP:   240 |jz print
+  DEBUG   control_unit:decode_execute ACC:        102 |AR:     5 |IP:     6 |DR:          8 |SP:   240 |push
+  DEBUG   control_unit:decode_execute ACC:        102 |AR:     6 |IP:     7 |DR:          8 |SP:   239 |inc message_index
+  DEBUG   control_unit:decode_execute ACC:        102 |AR:     7 |IP:     8 |DR:          1 |SP:   239 |jmp read_input
+  DEBUG   control_unit:decode_execute ACC:        102 |AR:     2 |IP:     3 |DR:          2 |SP:   239 |in
+  DEBUG   control_unit:decode_execute ACC: 
+            |AR:     3 |IP:     4 |DR:          2 |SP:   239 |cmp $10
+  DEBUG   control_unit:decode_execute ACC:          0 |AR:     4 |IP:     5 |DR:         10 |SP:   239 |jz print
+  DEBUG   control_unit:decode_execute ACC:          0 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        255 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:         87 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:         87 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:         87 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:         87 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:         87 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        254 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:         88 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:         88 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:         88 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:         88 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:         88 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        253 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        252 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:         90 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:         90 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:         90 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:         90 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:         90 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        251 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:         91 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:         91 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:         91 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:         91 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:         91 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        250 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:         92 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:         92 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:         92 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:         92 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:         92 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        249 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:         93 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:         93 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:         93 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:         93 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:         93 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        248 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:         34 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:         34 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:         34 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:         34 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:         34 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        247 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:         94 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:         94 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:         94 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:         94 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:         94 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        246 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:         95 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:         95 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:         95 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:         95 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:         95 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        245 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:         96 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:         96 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:         96 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:         96 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:         96 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        244 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:         97 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:         97 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:         97 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:         97 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:         97 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        243 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:         98 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:         98 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:         98 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:         98 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:         98 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        242 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:         99 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:         99 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:         99 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:         99 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:         99 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        241 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:        100 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:        100 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:        100 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:        100 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:        100 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        240 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:        101 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:        101 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:        101 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:        101 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:        101 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:        102 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:        102 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:        102 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:        102 |AR:    14 |IP:    15 |DR:         15 |SP:   239 |jmp print
+  DEBUG   control_unit:decode_execute ACC:        102 |AR:     8 |IP:     9 |DR:          8 |SP:   239 |ldsp
+  DEBUG   control_unit:decode_execute ACC:        239 |AR:     9 |IP:    10 |DR:          8 |SP:   239 |add message_index
+  DEBUG   control_unit:decode_execute ACC:        238 |AR:    10 |IP:    11 |DR:          1 |SP:   239 |ald
+  DEBUG   control_unit:decode_execute ACC:          0 |AR:    11 |IP:    12 |DR:          1 |SP:   239 |out
+  DEBUG   control_unit:decode_execute ACC:          0 |AR:    12 |IP:    13 |DR:          1 |SP:   239 |dec message_index
+  DEBUG   control_unit:decode_execute ACC:          0 |AR:    13 |IP:    14 |DR:          1 |SP:   239 |jz done
+  DEBUG   control_unit:decode_execute ACC:          0 |AR:    15 |IP:    16 |DR:         15 |SP:   239 |hlt
