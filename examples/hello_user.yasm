@@ -4,7 +4,7 @@ question: "whats your name?"
 index_question: 1 
 greeting: "hello, "
 index_greeting: 1
-responce_index: 0
+responce_index: -1
 .instructions
 loop:
 ld $question
@@ -12,16 +12,18 @@ add index_question
 ald
 out
 ld index_question
-sub $question
+sub question
 jz input
 inc index_question
 jmp loop
 
 input:
 in
+cmp $10
 jz answer
 push
 inc responce_index
+jmp input
 
 answer:
 
@@ -31,9 +33,10 @@ add index_greeting
 ald
 out
 ld index_greeting
-sub $greeting
+sub greeting
 jz name
 inc index_greeting
+jmp hello_loop
 
 name:
 ldsp

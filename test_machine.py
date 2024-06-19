@@ -36,6 +36,3 @@ def test_bar(golden, caplog):
         assert [x.strip() for x in code.strip().split('\n')] == [x.strip() for x in golden.out["out_code"].strip().split('\n')]
         assert stdout.getvalue().strip('\n') == golden.out["stdout"].strip('\n')
         assert caplog.text.rstrip("\n") == golden.out["out_log"].rstrip("\n")
-
-
-print("asdfx")

@@ -14,7 +14,7 @@ class ControlUnit:
         self.datapath = datapath
         self.program = program
         self.limit = limit
-        self.instr_counter = 0
+        self.inputs_counter = 0
         self.inputs = inputs
         self.commands = {
             "hlt": self.hlt,
@@ -52,6 +52,7 @@ class ControlUnit:
                 self.datapath.memory[row["index"]] = {"opcode": row["opcode"], "term": row["term"]}
             else:
                 self.datapath.memory[row["index"]] = {"arg": row["arg"]}
+        
 
     def decode_execute(self, instruction):
         logging.debug(self.datapath.__str__() + instruction["term"][2])
@@ -90,7 +91,7 @@ class ControlUnit:
 
     def push(self):
         obj = self.datapath.acc
-        self.datapath.memory[self.datapath.sp] = obj
+        self.datapath.memory[self.datapath.sp-1] = obj
         self.datapath.sp -= 1
 
     def pop(self):
@@ -132,20 +133,37 @@ class ControlUnit:
         self.datapath.set_flags()
 
     def cmp(self, arg):
-        self.datapath.acc -= arg
+    
+        try:
+            self.datapath.acc -= arg
+        except TypeError:
+            self.datapath.acc = ord(self.datapath.acc) - arg
         self.datapath.set_flags()
 
     def inc(self, arg):
         self.datapath.memory[self.datapath.dr]["arg"] += 1
 
-    def dec(self):
-        self.datapath.acc -= 1
+    def dec(self, arg):
+        self.datapath.memory[self.datapath.dr]["arg"] -= 1
+        self.datapath.set_flags()
 
     def inn(self):
-        print("TODO")
+        self.datapath.acc=self.inputs[self.inputs_counter]
+        self.inputs_counter+=1
+        self.datapath.set_flags()
+        print("flags", self.datapath.Z, self.datapath.N)
+
 
     def out(self):
-        print(self.datapath.acc)
+        try:
+            print(chr(self.datapath.acc+10))
+        except TypeError:
+            print(self.datapath.acc)
+
 
     def ald(self):
-        self.datapath.acc = self.datapath.memory[self.datapath.acc]["arg"]
+        try:
+            self.datapath.acc = self.datapath.memory[self.datapath.acc]["arg"]
+        except TypeError:
+            self.datapath.acc = self.datapath.memory[self.datapath.acc]
+

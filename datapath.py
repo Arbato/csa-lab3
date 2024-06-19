@@ -26,10 +26,18 @@ class DataPath:
             self.Z = 1
         else:
             self.Z = 0
-        if self.acc < 0:
-            self.N = 1
-        else:
-            self.N = 0
+        try:
+            if self.acc < 0:
+                self.N = 1
+            else:
+                self.N = 0
+        except TypeError:
+            if ord(self.acc) < 0:
+                self.N = 1
+            else:
+                self.N = 0
+
+
 
     def get_memory(self, index):
         # Retrieve value from memory at specified index
