@@ -149,13 +149,12 @@ class ControlUnit:
         self.datapath.acc = self.inputs[self.inputs_counter]
         self.inputs_counter += 1
         self.datapath.set_flags()
-        print("flags", self.datapath.Z, self.datapath.N)
 
     def out(self):
         try:
-            print(chr(self.datapath.acc + 10))
+            print(chr(self.datapath.acc + 10), end='')
         except (TypeError, ValueError):
-            print(self.datapath.acc)
+            print(self.datapath.acc, end='')
 
     def ald(self):
         try:

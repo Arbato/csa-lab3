@@ -28,7 +28,11 @@ def test_bar(golden, caplog):
         with contextlib.redirect_stdout(io.StringIO()) as stdout:
             translator_asm.main(source_file, target_file)
             code_dict = json.load(open(target_file, encoding="utf-8"))
+
+            input_stream = open(input_stream, encoding="utf-8").read()
+
             machine.main(code_dict, input_stream)
+
 
         with open(target_file, encoding="utf-8") as file:
             code = file.read()
