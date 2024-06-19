@@ -33,7 +33,6 @@ def test_bar(golden, caplog):
 
             machine.main(code_dict, input_stream)
 
-
         with open(target_file, encoding="utf-8") as file:
             code = file.read()
 
