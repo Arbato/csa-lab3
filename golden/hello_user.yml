@@ -48,7 +48,7 @@ source_code: |
 stdin: |
   ksusha
 stdout: |
-  source LoC: 73 code instr: 61
+  source LoC: 29 code instr: 61
   whats your name?hello, ksusha
 
 
