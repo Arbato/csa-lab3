@@ -52,7 +52,6 @@ class ControlUnit:
                 self.datapath.memory[row["index"]] = {"opcode": row["opcode"], "term": row["term"]}
             else:
                 self.datapath.memory[row["index"]] = {"arg": row["arg"]}
-        
 
     def decode_execute(self, instruction):
         logging.debug(self.datapath.__str__() + instruction["term"][2])
@@ -91,7 +90,7 @@ class ControlUnit:
 
     def push(self):
         obj = self.datapath.acc
-        self.datapath.memory[self.datapath.sp-1] = obj
+        self.datapath.memory[self.datapath.sp - 1] = obj
         self.datapath.sp -= 1
 
     def pop(self):
@@ -133,7 +132,6 @@ class ControlUnit:
         self.datapath.set_flags()
 
     def cmp(self, arg):
-    
         try:
             self.datapath.acc -= arg
         except TypeError:
@@ -148,22 +146,19 @@ class ControlUnit:
         self.datapath.set_flags()
 
     def inn(self):
-        self.datapath.acc=self.inputs[self.inputs_counter]
-        self.inputs_counter+=1
+        self.datapath.acc = self.inputs[self.inputs_counter]
+        self.inputs_counter += 1
         self.datapath.set_flags()
         print("flags", self.datapath.Z, self.datapath.N)
 
-
     def out(self):
         try:
-            print(chr(self.datapath.acc+10))
+            print(chr(self.datapath.acc + 10))
         except:
             print(self.datapath.acc)
-
 
     def ald(self):
         try:
             self.datapath.acc = self.datapath.memory[self.datapath.acc]["arg"]
         except TypeError:
             self.datapath.acc = self.datapath.memory[self.datapath.acc]
-

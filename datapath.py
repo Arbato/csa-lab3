@@ -37,8 +37,6 @@ class DataPath:
             else:
                 self.N = 0
 
-
-
     def get_memory(self, index):
         # Retrieve value from memory at specified index
         return self.memory[index]
