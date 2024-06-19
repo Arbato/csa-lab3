@@ -154,7 +154,7 @@ class ControlUnit:
     def out(self):
         try:
             print(chr(self.datapath.acc + 10))
-        except:
+        except (TypeError, ValueError):
             print(self.datapath.acc)
 
     def ald(self):
