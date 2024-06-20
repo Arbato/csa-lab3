@@ -56,7 +56,7 @@ def clean_code(code):
             code["arg"] = code["arg"].strip("#")
     else:
         code["adr"] = "indirect"
-    
+
     return code
 
 

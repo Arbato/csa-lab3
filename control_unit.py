@@ -96,7 +96,7 @@ class ControlUnit:
             self.decode_execute(instruction)
             self.datapath.ar = self.datapath.ip
             self.datapath.ip += 1
-            if instruction is None :
+            if instruction is None:
                 break  # End of program
 
     def tick(self, n):
@@ -147,7 +147,6 @@ class ControlUnit:
         self.datapath.set_flags()
         self.tick(1)
 
-
     def st(self, arg):
         self.datapath.memory[self.datapath.dr]["arg"] = self.datapath.acc
         self.tick(2)
@@ -197,4 +196,3 @@ class ControlUnit:
         except (TypeError, ValueError):
             print(self.datapath.acc, end="")
         self.tick(1)
-
