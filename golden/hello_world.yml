@@ -1,29 +1,30 @@
 source_code: |
   .data
-    msg: "Hello world!"
-    index: 1 
-  .instructions
-  looop:
-    ld $msg
-    add index
-    ald
-    out
-    ld index
-    sub msg
-    jz ext
-    inc index
-  jmp looop
-  ext:
-    hlt
-
+      msg: "Hello world!"
+      counter: 0
+      index: 0
+    .instructions
+      
+      ld $msg
+      st index
+    looop:
+      inc index
+      ld #index ; load letter
+      out
+      inc counter
+      cmp msg
+      jz ext
+    jmp looop
+    ext:
+      hlt
 
 stdin: |
 stdout: |
-  source LoC: 29 code instr: 25
+  source LoC: 29 code instr: 26
   Hello world!
 
 out_code: |
-  [{"index": 0, "opcode": "jmp", "arg": 15, "term": [2, 0, "Jump to start"], "direct": true},
+  [{"index": 0, "opcode": "jmp", "arg": 16, "term": [3, 0, "Jump to start"], "adr": "direct"},
   {"index": 1, "arg": 12},
   {"index": 2, "arg": "H"},
   {"index": 3, "arg": "e"},
@@ -37,124 +38,104 @@ out_code: |
   {"index": 11, "arg": "l"},
   {"index": 12, "arg": "d"},
   {"index": 13, "arg": "!"},
-  {"index": 14, "arg": 1},
-  {"index": 15, "opcode": "ld", "arg": 1, "term": [2, 0, "ld $msg"], "direct": true},
-  {"index": 16, "opcode": "add", "arg": 14, "term": [3, 0, "add index"], "direct": false},
-  {"index": 17, "opcode": "ald", "term": [4, 0, "ald"], "direct": false},
-  {"index": 18, "opcode": "out", "term": [5, 0, "out"], "direct": false},
-  {"index": 19, "opcode": "ld", "arg": 14, "term": [6, 0, "ld index"], "direct": false},
-  {"index": 20, "opcode": "sub", "arg": 1, "term": [7, 0, "sub msg"], "direct": false},
-  {"index": 21, "opcode": "jz", "arg": 24, "term": [8, 0, "jz ext"], "direct": true},
-  {"index": 22, "opcode": "inc", "arg": 14, "term": [9, 0, "inc index"], "direct": true},
-  {"index": 23, "opcode": "jmp", "arg": 15, "term": [10, 0, "jmp looop"], "direct": true},
-  {"index": 24, "opcode": "hlt", "term": [12, 0, "hlt"], "direct": false}]
+  {"index": 14, "arg": 0},
+  {"index": 15, "arg": 0},
+  {"index": 16, "opcode": "ld", "arg": 1, "term": [1, 0, "ld $msg"], "adr": "direct"},
+  {"index": 17, "opcode": "st", "arg": 15, "term": [2, 0, "st index"], "adr": "indirect"},
+  {"index": 18, "opcode": "inc", "arg": 15, "term": [4, 0, "inc index"], "adr": "direct"},
+  {"index": 19, "opcode": "ld", "arg": 15, "term": [5, 0, "ld #index"], "adr": "relative"},
+  {"index": 20, "opcode": "out", "term": [6, 0, "out"], "adr": "indirect"},
+  {"index": 21, "opcode": "inc", "arg": 14, "term": [7, 0, "inc counter"], "adr": "direct"},
+  {"index": 22, "opcode": "cmp", "arg": 1, "term": [8, 0, "cmp msg"], "adr": "indirect"},
+  {"index": 23, "opcode": "jz", "arg": 25, "term": [9, 0, "jz ext"], "adr": "direct"},
+  {"index": 24, "opcode": "jmp", "arg": 18, "term": [10, 0, "jmp looop"], "adr": "direct"},
+  {"index": 25, "opcode": "hlt", "term": [12, 0, "hlt"], "adr": "indirect"}]
 
 out_log: |
-  DEBUG   control_unit:decode_execute ACC:          0 |AR:     0 |IP:     0 |DR:          0 |SP:   256 |Jump to start
-  DEBUG   control_unit:decode_execute ACC:          0 |AR:    15 |IP:    16 |DR:         15 |SP:   256 |ld $msg
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:    16 |IP:    17 |DR:          1 |SP:   256 |add index
-  DEBUG   control_unit:decode_execute ACC:          2 |AR:    17 |IP:    18 |DR:         14 |SP:   256 |ald
-  DEBUG   control_unit:decode_execute ACC: H          |AR:    18 |IP:    19 |DR:         14 |SP:   256 |out
-  DEBUG   control_unit:decode_execute ACC: H          |AR:    19 |IP:    20 |DR:         14 |SP:   256 |ld index
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:    20 |IP:    21 |DR:         14 |SP:   256 |sub msg
-  DEBUG   control_unit:decode_execute ACC:        -11 |AR:    21 |IP:    22 |DR:          1 |SP:   256 |jz ext
-  DEBUG   control_unit:decode_execute ACC:        -11 |AR:    22 |IP:    23 |DR:         24 |SP:   256 |inc index
-  DEBUG   control_unit:decode_execute ACC:        -11 |AR:    23 |IP:    24 |DR:         14 |SP:   256 |jmp looop
-  DEBUG   control_unit:decode_execute ACC:        -11 |AR:    15 |IP:    16 |DR:         15 |SP:   256 |ld $msg
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:    16 |IP:    17 |DR:          1 |SP:   256 |add index
-  DEBUG   control_unit:decode_execute ACC:          3 |AR:    17 |IP:    18 |DR:         14 |SP:   256 |ald
-  DEBUG   control_unit:decode_execute ACC: e          |AR:    18 |IP:    19 |DR:         14 |SP:   256 |out
-  DEBUG   control_unit:decode_execute ACC: e          |AR:    19 |IP:    20 |DR:         14 |SP:   256 |ld index
-  DEBUG   control_unit:decode_execute ACC:          2 |AR:    20 |IP:    21 |DR:         14 |SP:   256 |sub msg
-  DEBUG   control_unit:decode_execute ACC:        -10 |AR:    21 |IP:    22 |DR:          1 |SP:   256 |jz ext
-  DEBUG   control_unit:decode_execute ACC:        -10 |AR:    22 |IP:    23 |DR:         24 |SP:   256 |inc index
-  DEBUG   control_unit:decode_execute ACC:        -10 |AR:    23 |IP:    24 |DR:         14 |SP:   256 |jmp looop
-  DEBUG   control_unit:decode_execute ACC:        -10 |AR:    15 |IP:    16 |DR:         15 |SP:   256 |ld $msg
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:    16 |IP:    17 |DR:          1 |SP:   256 |add index
-  DEBUG   control_unit:decode_execute ACC:          4 |AR:    17 |IP:    18 |DR:         14 |SP:   256 |ald
-  DEBUG   control_unit:decode_execute ACC: l          |AR:    18 |IP:    19 |DR:         14 |SP:   256 |out
-  DEBUG   control_unit:decode_execute ACC: l          |AR:    19 |IP:    20 |DR:         14 |SP:   256 |ld index
-  DEBUG   control_unit:decode_execute ACC:          3 |AR:    20 |IP:    21 |DR:         14 |SP:   256 |sub msg
-  DEBUG   control_unit:decode_execute ACC:         -9 |AR:    21 |IP:    22 |DR:          1 |SP:   256 |jz ext
-  DEBUG   control_unit:decode_execute ACC:         -9 |AR:    22 |IP:    23 |DR:         24 |SP:   256 |inc index
-  DEBUG   control_unit:decode_execute ACC:         -9 |AR:    23 |IP:    24 |DR:         14 |SP:   256 |jmp looop
-  DEBUG   control_unit:decode_execute ACC:         -9 |AR:    15 |IP:    16 |DR:         15 |SP:   256 |ld $msg
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:    16 |IP:    17 |DR:          1 |SP:   256 |add index
-  DEBUG   control_unit:decode_execute ACC:          5 |AR:    17 |IP:    18 |DR:         14 |SP:   256 |ald
-  DEBUG   control_unit:decode_execute ACC: l          |AR:    18 |IP:    19 |DR:         14 |SP:   256 |out
-  DEBUG   control_unit:decode_execute ACC: l          |AR:    19 |IP:    20 |DR:         14 |SP:   256 |ld index
-  DEBUG   control_unit:decode_execute ACC:          4 |AR:    20 |IP:    21 |DR:         14 |SP:   256 |sub msg
-  DEBUG   control_unit:decode_execute ACC:         -8 |AR:    21 |IP:    22 |DR:          1 |SP:   256 |jz ext
-  DEBUG   control_unit:decode_execute ACC:         -8 |AR:    22 |IP:    23 |DR:         24 |SP:   256 |inc index
-  DEBUG   control_unit:decode_execute ACC:         -8 |AR:    23 |IP:    24 |DR:         14 |SP:   256 |jmp looop
-  DEBUG   control_unit:decode_execute ACC:         -8 |AR:    15 |IP:    16 |DR:         15 |SP:   256 |ld $msg
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:    16 |IP:    17 |DR:          1 |SP:   256 |add index
-  DEBUG   control_unit:decode_execute ACC:          6 |AR:    17 |IP:    18 |DR:         14 |SP:   256 |ald
-  DEBUG   control_unit:decode_execute ACC: o          |AR:    18 |IP:    19 |DR:         14 |SP:   256 |out
-  DEBUG   control_unit:decode_execute ACC: o          |AR:    19 |IP:    20 |DR:         14 |SP:   256 |ld index
-  DEBUG   control_unit:decode_execute ACC:          5 |AR:    20 |IP:    21 |DR:         14 |SP:   256 |sub msg
-  DEBUG   control_unit:decode_execute ACC:         -7 |AR:    21 |IP:    22 |DR:          1 |SP:   256 |jz ext
-  DEBUG   control_unit:decode_execute ACC:         -7 |AR:    22 |IP:    23 |DR:         24 |SP:   256 |inc index
-  DEBUG   control_unit:decode_execute ACC:         -7 |AR:    23 |IP:    24 |DR:         14 |SP:   256 |jmp looop
-  DEBUG   control_unit:decode_execute ACC:         -7 |AR:    15 |IP:    16 |DR:         15 |SP:   256 |ld $msg
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:    16 |IP:    17 |DR:          1 |SP:   256 |add index
-  DEBUG   control_unit:decode_execute ACC:          7 |AR:    17 |IP:    18 |DR:         14 |SP:   256 |ald
-  DEBUG   control_unit:decode_execute ACC:            |AR:    18 |IP:    19 |DR:         14 |SP:   256 |out
-  DEBUG   control_unit:decode_execute ACC:            |AR:    19 |IP:    20 |DR:         14 |SP:   256 |ld index
-  DEBUG   control_unit:decode_execute ACC:          6 |AR:    20 |IP:    21 |DR:         14 |SP:   256 |sub msg
-  DEBUG   control_unit:decode_execute ACC:         -6 |AR:    21 |IP:    22 |DR:          1 |SP:   256 |jz ext
-  DEBUG   control_unit:decode_execute ACC:         -6 |AR:    22 |IP:    23 |DR:         24 |SP:   256 |inc index
-  DEBUG   control_unit:decode_execute ACC:         -6 |AR:    23 |IP:    24 |DR:         14 |SP:   256 |jmp looop
-  DEBUG   control_unit:decode_execute ACC:         -6 |AR:    15 |IP:    16 |DR:         15 |SP:   256 |ld $msg
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:    16 |IP:    17 |DR:          1 |SP:   256 |add index
-  DEBUG   control_unit:decode_execute ACC:          8 |AR:    17 |IP:    18 |DR:         14 |SP:   256 |ald
-  DEBUG   control_unit:decode_execute ACC: w          |AR:    18 |IP:    19 |DR:         14 |SP:   256 |out
-  DEBUG   control_unit:decode_execute ACC: w          |AR:    19 |IP:    20 |DR:         14 |SP:   256 |ld index
-  DEBUG   control_unit:decode_execute ACC:          7 |AR:    20 |IP:    21 |DR:         14 |SP:   256 |sub msg
-  DEBUG   control_unit:decode_execute ACC:         -5 |AR:    21 |IP:    22 |DR:          1 |SP:   256 |jz ext
-  DEBUG   control_unit:decode_execute ACC:         -5 |AR:    22 |IP:    23 |DR:         24 |SP:   256 |inc index
-  DEBUG   control_unit:decode_execute ACC:         -5 |AR:    23 |IP:    24 |DR:         14 |SP:   256 |jmp looop
-  DEBUG   control_unit:decode_execute ACC:         -5 |AR:    15 |IP:    16 |DR:         15 |SP:   256 |ld $msg
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:    16 |IP:    17 |DR:          1 |SP:   256 |add index
-  DEBUG   control_unit:decode_execute ACC:          9 |AR:    17 |IP:    18 |DR:         14 |SP:   256 |ald
-  DEBUG   control_unit:decode_execute ACC: o          |AR:    18 |IP:    19 |DR:         14 |SP:   256 |out
-  DEBUG   control_unit:decode_execute ACC: o          |AR:    19 |IP:    20 |DR:         14 |SP:   256 |ld index
-  DEBUG   control_unit:decode_execute ACC:          8 |AR:    20 |IP:    21 |DR:         14 |SP:   256 |sub msg
-  DEBUG   control_unit:decode_execute ACC:         -4 |AR:    21 |IP:    22 |DR:          1 |SP:   256 |jz ext
-  DEBUG   control_unit:decode_execute ACC:         -4 |AR:    22 |IP:    23 |DR:         24 |SP:   256 |inc index
-  DEBUG   control_unit:decode_execute ACC:         -4 |AR:    23 |IP:    24 |DR:         14 |SP:   256 |jmp looop
-  DEBUG   control_unit:decode_execute ACC:         -4 |AR:    15 |IP:    16 |DR:         15 |SP:   256 |ld $msg
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:    16 |IP:    17 |DR:          1 |SP:   256 |add index
-  DEBUG   control_unit:decode_execute ACC:         10 |AR:    17 |IP:    18 |DR:         14 |SP:   256 |ald
-  DEBUG   control_unit:decode_execute ACC: r          |AR:    18 |IP:    19 |DR:         14 |SP:   256 |out
-  DEBUG   control_unit:decode_execute ACC: r          |AR:    19 |IP:    20 |DR:         14 |SP:   256 |ld index
-  DEBUG   control_unit:decode_execute ACC:          9 |AR:    20 |IP:    21 |DR:         14 |SP:   256 |sub msg
-  DEBUG   control_unit:decode_execute ACC:         -3 |AR:    21 |IP:    22 |DR:          1 |SP:   256 |jz ext
-  DEBUG   control_unit:decode_execute ACC:         -3 |AR:    22 |IP:    23 |DR:         24 |SP:   256 |inc index
-  DEBUG   control_unit:decode_execute ACC:         -3 |AR:    23 |IP:    24 |DR:         14 |SP:   256 |jmp looop
-  DEBUG   control_unit:decode_execute ACC:         -3 |AR:    15 |IP:    16 |DR:         15 |SP:   256 |ld $msg
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:    16 |IP:    17 |DR:          1 |SP:   256 |add index
-  DEBUG   control_unit:decode_execute ACC:         11 |AR:    17 |IP:    18 |DR:         14 |SP:   256 |ald
-  DEBUG   control_unit:decode_execute ACC: l          |AR:    18 |IP:    19 |DR:         14 |SP:   256 |out
-  DEBUG   control_unit:decode_execute ACC: l          |AR:    19 |IP:    20 |DR:         14 |SP:   256 |ld index
-  DEBUG   control_unit:decode_execute ACC:         10 |AR:    20 |IP:    21 |DR:         14 |SP:   256 |sub msg
-  DEBUG   control_unit:decode_execute ACC:         -2 |AR:    21 |IP:    22 |DR:          1 |SP:   256 |jz ext
-  DEBUG   control_unit:decode_execute ACC:         -2 |AR:    22 |IP:    23 |DR:         24 |SP:   256 |inc index
-  DEBUG   control_unit:decode_execute ACC:         -2 |AR:    23 |IP:    24 |DR:         14 |SP:   256 |jmp looop
-  DEBUG   control_unit:decode_execute ACC:         -2 |AR:    15 |IP:    16 |DR:         15 |SP:   256 |ld $msg
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:    16 |IP:    17 |DR:          1 |SP:   256 |add index
-  DEBUG   control_unit:decode_execute ACC:         12 |AR:    17 |IP:    18 |DR:         14 |SP:   256 |ald
-  DEBUG   control_unit:decode_execute ACC: d          |AR:    18 |IP:    19 |DR:         14 |SP:   256 |out
-  DEBUG   control_unit:decode_execute ACC: d          |AR:    19 |IP:    20 |DR:         14 |SP:   256 |ld index
-  DEBUG   control_unit:decode_execute ACC:         11 |AR:    20 |IP:    21 |DR:         14 |SP:   256 |sub msg
-  DEBUG   control_unit:decode_execute ACC:         -1 |AR:    21 |IP:    22 |DR:          1 |SP:   256 |jz ext
-  DEBUG   control_unit:decode_execute ACC:         -1 |AR:    22 |IP:    23 |DR:         24 |SP:   256 |inc index
-  DEBUG   control_unit:decode_execute ACC:         -1 |AR:    23 |IP:    24 |DR:         14 |SP:   256 |jmp looop
-  DEBUG   control_unit:decode_execute ACC:         -1 |AR:    15 |IP:    16 |DR:         15 |SP:   256 |ld $msg
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:    16 |IP:    17 |DR:          1 |SP:   256 |add index
-  DEBUG   control_unit:decode_execute ACC:         13 |AR:    17 |IP:    18 |DR:         14 |SP:   256 |ald
-  DEBUG   control_unit:decode_execute ACC: !          |AR:    18 |IP:    19 |DR:         14 |SP:   256 |out
-  DEBUG   control_unit:decode_execute ACC: !          |AR:    19 |IP:    20 |DR:         14 |SP:   256 |ld index
-  DEBUG   control_unit:decode_execute ACC:         12 |AR:    20 |IP:    21 |DR:         14 |SP:   256 |sub msg
-  DEBUG   control_unit:decode_execute ACC:          0 |AR:    21 |IP:    22 |DR:          1 |SP:   256 |jz ext
-  DEBUG   control_unit:decode_execute ACC:          0 |AR:    24 |IP:    25 |DR:         24 |SP:   256 |hlt
+  DEBUG   control_unit:decode_execute ACC:          0 |AR:     0 |IP:    16 |DR:         16 |SP:   256 | TICK:       2 |Jump to start
+  DEBUG   control_unit:decode_execute ACC:          1 |AR:    16 |IP:    17 |DR:          1 |SP:   256 | TICK:       4 |ld $msg
+  DEBUG   control_unit:decode_execute ACC:          1 |AR:    17 |IP:    18 |DR:         15 |SP:   256 | TICK:       9 |st index
+  DEBUG   control_unit:decode_execute ACC:          2 |AR:    18 |IP:    19 |DR:         15 |SP:   256 | TICK:      11 |inc index
+  DEBUG   control_unit:decode_execute ACC: H          |AR:    19 |IP:    20 |DR:         15 |SP:   256 | TICK:      16 |ld #index
+  DEBUG   control_unit:decode_execute ACC: H          |AR:    20 |IP:    21 |DR:         15 |SP:   256 | TICK:      17 |out
+  DEBUG   control_unit:decode_execute ACC:          1 |AR:    21 |IP:    22 |DR:         14 |SP:   256 | TICK:      19 |inc counter
+  DEBUG   control_unit:decode_execute ACC:          1 |AR:    22 |IP:    23 |DR:          1 |SP:   256 | TICK:      23 |cmp msg
+  DEBUG   control_unit:decode_execute ACC:          1 |AR:    23 |IP:    24 |DR:         25 |SP:   256 | TICK:      25 |jz ext
+  DEBUG   control_unit:decode_execute ACC:          1 |AR:    24 |IP:    18 |DR:         18 |SP:   256 | TICK:      27 |jmp looop
+  DEBUG   control_unit:decode_execute ACC:          3 |AR:    18 |IP:    19 |DR:         15 |SP:   256 | TICK:      29 |inc index
+  DEBUG   control_unit:decode_execute ACC: e          |AR:    19 |IP:    20 |DR:         15 |SP:   256 | TICK:      34 |ld #index
+  DEBUG   control_unit:decode_execute ACC: e          |AR:    20 |IP:    21 |DR:         15 |SP:   256 | TICK:      35 |out
+  DEBUG   control_unit:decode_execute ACC:          2 |AR:    21 |IP:    22 |DR:         14 |SP:   256 | TICK:      37 |inc counter
+  DEBUG   control_unit:decode_execute ACC:          2 |AR:    22 |IP:    23 |DR:          1 |SP:   256 | TICK:      41 |cmp msg
+  DEBUG   control_unit:decode_execute ACC:          2 |AR:    23 |IP:    24 |DR:         25 |SP:   256 | TICK:      43 |jz ext
+  DEBUG   control_unit:decode_execute ACC:          2 |AR:    24 |IP:    18 |DR:         18 |SP:   256 | TICK:      45 |jmp looop
+  DEBUG   control_unit:decode_execute ACC:          4 |AR:    18 |IP:    19 |DR:         15 |SP:   256 | TICK:      47 |inc index
+  DEBUG   control_unit:decode_execute ACC: l          |AR:    19 |IP:    20 |DR:         15 |SP:   256 | TICK:      52 |ld #index
+  DEBUG   control_unit:decode_execute ACC: l          |AR:    20 |IP:    21 |DR:         15 |SP:   256 | TICK:      53 |out
+  DEBUG   control_unit:decode_execute ACC:          3 |AR:    21 |IP:    22 |DR:         14 |SP:   256 | TICK:      55 |inc counter
+  DEBUG   control_unit:decode_execute ACC:          3 |AR:    22 |IP:    23 |DR:          1 |SP:   256 | TICK:      59 |cmp msg
+  DEBUG   control_unit:decode_execute ACC:          3 |AR:    23 |IP:    24 |DR:         25 |SP:   256 | TICK:      61 |jz ext
+  DEBUG   control_unit:decode_execute ACC:          3 |AR:    24 |IP:    18 |DR:         18 |SP:   256 | TICK:      63 |jmp looop
+  DEBUG   control_unit:decode_execute ACC:          5 |AR:    18 |IP:    19 |DR:         15 |SP:   256 | TICK:      65 |inc index
+  DEBUG   control_unit:decode_execute ACC: l          |AR:    19 |IP:    20 |DR:         15 |SP:   256 | TICK:      70 |ld #index
+  DEBUG   control_unit:decode_execute ACC: l          |AR:    20 |IP:    21 |DR:         15 |SP:   256 | TICK:      71 |out
+  DEBUG   control_unit:decode_execute ACC:          4 |AR:    21 |IP:    22 |DR:         14 |SP:   256 | TICK:      73 |inc counter
+  DEBUG   control_unit:decode_execute ACC:          4 |AR:    22 |IP:    23 |DR:          1 |SP:   256 | TICK:      77 |cmp msg
+  DEBUG   control_unit:decode_execute ACC:          4 |AR:    23 |IP:    24 |DR:         25 |SP:   256 | TICK:      79 |jz ext
+  DEBUG   control_unit:decode_execute ACC:          4 |AR:    24 |IP:    18 |DR:         18 |SP:   256 | TICK:      81 |jmp looop
+  DEBUG   control_unit:decode_execute ACC:          6 |AR:    18 |IP:    19 |DR:         15 |SP:   256 | TICK:      83 |inc index
+  DEBUG   control_unit:decode_execute ACC: o          |AR:    19 |IP:    20 |DR:         15 |SP:   256 | TICK:      88 |ld #index
+  DEBUG   control_unit:decode_execute ACC: o          |AR:    20 |IP:    21 |DR:         15 |SP:   256 | TICK:      89 |out
+  DEBUG   control_unit:decode_execute ACC:          5 |AR:    21 |IP:    22 |DR:         14 |SP:   256 | TICK:      91 |inc counter
+  DEBUG   control_unit:decode_execute ACC:          5 |AR:    22 |IP:    23 |DR:          1 |SP:   256 | TICK:      95 |cmp msg
+  DEBUG   control_unit:decode_execute ACC:          5 |AR:    23 |IP:    24 |DR:         25 |SP:   256 | TICK:      97 |jz ext
+  DEBUG   control_unit:decode_execute ACC:          5 |AR:    24 |IP:    18 |DR:         18 |SP:   256 | TICK:      99 |jmp looop
+  DEBUG   control_unit:decode_execute ACC:          7 |AR:    18 |IP:    19 |DR:         15 |SP:   256 | TICK:     101 |inc index
+  DEBUG   control_unit:decode_execute ACC:            |AR:    19 |IP:    20 |DR:         15 |SP:   256 | TICK:     106 |ld #index
+  DEBUG   control_unit:decode_execute ACC:            |AR:    20 |IP:    21 |DR:         15 |SP:   256 | TICK:     107 |out
+  DEBUG   control_unit:decode_execute ACC:          6 |AR:    21 |IP:    22 |DR:         14 |SP:   256 | TICK:     109 |inc counter
+  DEBUG   control_unit:decode_execute ACC:          6 |AR:    22 |IP:    23 |DR:          1 |SP:   256 | TICK:     113 |cmp msg
+  DEBUG   control_unit:decode_execute ACC:          6 |AR:    23 |IP:    24 |DR:         25 |SP:   256 | TICK:     115 |jz ext
+  DEBUG   control_unit:decode_execute ACC:          6 |AR:    24 |IP:    18 |DR:         18 |SP:   256 | TICK:     117 |jmp looop
+  DEBUG   control_unit:decode_execute ACC:          8 |AR:    18 |IP:    19 |DR:         15 |SP:   256 | TICK:     119 |inc index
+  DEBUG   control_unit:decode_execute ACC: w          |AR:    19 |IP:    20 |DR:         15 |SP:   256 | TICK:     124 |ld #index
+  DEBUG   control_unit:decode_execute ACC: w          |AR:    20 |IP:    21 |DR:         15 |SP:   256 | TICK:     125 |out
+  DEBUG   control_unit:decode_execute ACC:          7 |AR:    21 |IP:    22 |DR:         14 |SP:   256 | TICK:     127 |inc counter
+  DEBUG   control_unit:decode_execute ACC:          7 |AR:    22 |IP:    23 |DR:          1 |SP:   256 | TICK:     131 |cmp msg
+  DEBUG   control_unit:decode_execute ACC:          7 |AR:    23 |IP:    24 |DR:         25 |SP:   256 | TICK:     133 |jz ext
+  DEBUG   control_unit:decode_execute ACC:          7 |AR:    24 |IP:    18 |DR:         18 |SP:   256 | TICK:     135 |jmp looop
+  DEBUG   control_unit:decode_execute ACC:          9 |AR:    18 |IP:    19 |DR:         15 |SP:   256 | TICK:     137 |inc index
+  DEBUG   control_unit:decode_execute ACC: o          |AR:    19 |IP:    20 |DR:         15 |SP:   256 | TICK:     142 |ld #index
+  DEBUG   control_unit:decode_execute ACC: o          |AR:    20 |IP:    21 |DR:         15 |SP:   256 | TICK:     143 |out
+  DEBUG   control_unit:decode_execute ACC:          8 |AR:    21 |IP:    22 |DR:         14 |SP:   256 | TICK:     145 |inc counter
+  DEBUG   control_unit:decode_execute ACC:          8 |AR:    22 |IP:    23 |DR:          1 |SP:   256 | TICK:     149 |cmp msg
+  DEBUG   control_unit:decode_execute ACC:          8 |AR:    23 |IP:    24 |DR:         25 |SP:   256 | TICK:     151 |jz ext
+  DEBUG   control_unit:decode_execute ACC:          8 |AR:    24 |IP:    18 |DR:         18 |SP:   256 | TICK:     153 |jmp looop
+  DEBUG   control_unit:decode_execute ACC:         10 |AR:    18 |IP:    19 |DR:         15 |SP:   256 | TICK:     155 |inc index
+  DEBUG   control_unit:decode_execute ACC: r          |AR:    19 |IP:    20 |DR:         15 |SP:   256 | TICK:     160 |ld #index
+  DEBUG   control_unit:decode_execute ACC: r          |AR:    20 |IP:    21 |DR:         15 |SP:   256 | TICK:     161 |out
+  DEBUG   control_unit:decode_execute ACC:          9 |AR:    21 |IP:    22 |DR:         14 |SP:   256 | TICK:     163 |inc counter
+  DEBUG   control_unit:decode_execute ACC:          9 |AR:    22 |IP:    23 |DR:          1 |SP:   256 | TICK:     167 |cmp msg
+  DEBUG   control_unit:decode_execute ACC:          9 |AR:    23 |IP:    24 |DR:         25 |SP:   256 | TICK:     169 |jz ext
+  DEBUG   control_unit:decode_execute ACC:          9 |AR:    24 |IP:    18 |DR:         18 |SP:   256 | TICK:     171 |jmp looop
+  DEBUG   control_unit:decode_execute ACC:         11 |AR:    18 |IP:    19 |DR:         15 |SP:   256 | TICK:     173 |inc index
+  DEBUG   control_unit:decode_execute ACC: l          |AR:    19 |IP:    20 |DR:         15 |SP:   256 | TICK:     178 |ld #index
+  DEBUG   control_unit:decode_execute ACC: l          |AR:    20 |IP:    21 |DR:         15 |SP:   256 | TICK:     179 |out
+  DEBUG   control_unit:decode_execute ACC:         10 |AR:    21 |IP:    22 |DR:         14 |SP:   256 | TICK:     181 |inc counter
+  DEBUG   control_unit:decode_execute ACC:         10 |AR:    22 |IP:    23 |DR:          1 |SP:   256 | TICK:     185 |cmp msg
+  DEBUG   control_unit:decode_execute ACC:         10 |AR:    23 |IP:    24 |DR:         25 |SP:   256 | TICK:     187 |jz ext
+  DEBUG   control_unit:decode_execute ACC:         10 |AR:    24 |IP:    18 |DR:         18 |SP:   256 | TICK:     189 |jmp looop
+  DEBUG   control_unit:decode_execute ACC:         12 |AR:    18 |IP:    19 |DR:         15 |SP:   256 | TICK:     191 |inc index
+  DEBUG   control_unit:decode_execute ACC: d          |AR:    19 |IP:    20 |DR:         15 |SP:   256 | TICK:     196 |ld #index
+  DEBUG   control_unit:decode_execute ACC: d          |AR:    20 |IP:    21 |DR:         15 |SP:   256 | TICK:     197 |out
+  DEBUG   control_unit:decode_execute ACC:         11 |AR:    21 |IP:    22 |DR:         14 |SP:   256 | TICK:     199 |inc counter
+  DEBUG   control_unit:decode_execute ACC:         11 |AR:    22 |IP:    23 |DR:          1 |SP:   256 | TICK:     203 |cmp msg
+  DEBUG   control_unit:decode_execute ACC:         11 |AR:    23 |IP:    24 |DR:         25 |SP:   256 | TICK:     205 |jz ext
+  DEBUG   control_unit:decode_execute ACC:         11 |AR:    24 |IP:    18 |DR:         18 |SP:   256 | TICK:     207 |jmp looop
+  DEBUG   control_unit:decode_execute ACC:         13 |AR:    18 |IP:    19 |DR:         15 |SP:   256 | TICK:     209 |inc index
+  DEBUG   control_unit:decode_execute ACC: !          |AR:    19 |IP:    20 |DR:         15 |SP:   256 | TICK:     214 |ld #index
+  DEBUG   control_unit:decode_execute ACC: !          |AR:    20 |IP:    21 |DR:         15 |SP:   256 | TICK:     215 |out
+  DEBUG   control_unit:decode_execute ACC:         12 |AR:    21 |IP:    22 |DR:         14 |SP:   256 | TICK:     217 |inc counter
+  DEBUG   control_unit:decode_execute ACC:         12 |AR:    22 |IP:    23 |DR:          1 |SP:   256 | TICK:     221 |cmp msg
+  DEBUG   control_unit:decode_execute ACC:         12 |AR:    23 |IP:    25 |DR:         25 |SP:   256 | TICK:     223 |jz ext
+  DEBUG   control_unit:decode_execute ACC:         12 |AR:    25 |IP:    26 |DR:         25 |SP:   256 | TICK:     224 |hlt

@@ -29,205 +29,205 @@ source_code: |
       hlt
 
 stdin: |
+
 stdout: |
   source LoC: 29 code instr: 24
   4613732
 out_code: |
-  [{"index": 0, "opcode": "jmp", "arg": 6, "term": [5, 0, "Jump to start"], "direct": true},
+  [{"index": 0, "opcode": "jmp", "arg": 6, "term": [5, 0, "Jump to start"], "adr": "direct"},
   {"index": 1, "arg": 1},
   {"index": 2, "arg": 1},
   {"index": 3, "arg": 0},
   {"index": 4, "arg": 0},
   {"index": 5, "arg": 4000000},
-  {"index": 6, "opcode": "cmp", "arg": 5, "term": [2, 0, "cmp limit"], "direct": false},
-  {"index": 7, "opcode": "jne", "arg": 21, "term": [3, 0, "jne end"], "direct": true},
-  {"index": 8, "opcode": "ld", "arg": 1, "term": [4, 0, "ld a"], "direct": false},
-  {"index": 9, "opcode": "add", "arg": 2, "term": [5, 0, "add b"], "direct": false},
-  {"index": 10, "opcode": "st", "arg": 3, "term": [6, 0, "st c"], "direct": false},
-  {"index": 11, "opcode": "ld", "arg": 3, "term": [7, 0, "ld c"], "direct": false},
-  {"index": 12, "opcode": "add", "arg": 4, "term": [8, 0, "add sum"], "direct": false},
-  {"index": 13, "opcode": "st", "arg": 4, "term": [9, 0, "st sum"], "direct": false},
-  {"index": 14, "opcode": "ld", "arg": 2, "term": [10, 0, "ld b"], "direct": false},
-  {"index": 15, "opcode": "add", "arg": 3, "term": [11, 0, "add c"], "direct": false},
-  {"index": 16, "opcode": "st", "arg": 1, "term": [12, 0, "st a"], "direct": false},
-  {"index": 17, "opcode": "ld", "arg": 3, "term": [13, 0, "ld c"], "direct": false},
-  {"index": 18, "opcode": "add", "arg": 1, "term": [14, 0, "add a"], "direct": false},
-  {"index": 19, "opcode": "st", "arg": 2, "term": [15, 0, "st b"], "direct": false},
-  {"index": 20, "opcode": "jmp", "arg": 6, "term": [16, 0, "jmp loop"], "direct": true},
-  {"index": 21, "opcode": "ld", "arg": 4, "term": [18, 0, "ld sum"], "direct": false},
-  {"index": 22, "opcode": "out", "term": [19, 0, "out"], "direct": false},
-  {"index": 23, "opcode": "hlt", "term": [20, 0, "hlt"], "direct": false}]
+  {"index": 6, "opcode": "cmp", "arg": 5, "term": [2, 0, "cmp limit"], "adr": "indirect"},
+  {"index": 7, "opcode": "jne", "arg": 21, "term": [3, 0, "jne end"], "adr": "direct"},
+  {"index": 8, "opcode": "ld", "arg": 1, "term": [4, 0, "ld a"], "adr": "indirect"},
+  {"index": 9, "opcode": "add", "arg": 2, "term": [5, 0, "add b"], "adr": "indirect"},
+  {"index": 10, "opcode": "st", "arg": 3, "term": [6, 0, "st c"], "adr": "indirect"},
+  {"index": 11, "opcode": "ld", "arg": 3, "term": [7, 0, "ld c"], "adr": "indirect"},
+  {"index": 12, "opcode": "add", "arg": 4, "term": [8, 0, "add sum"], "adr": "indirect"},
+  {"index": 13, "opcode": "st", "arg": 4, "term": [9, 0, "st sum"], "adr": "indirect"},
+  {"index": 14, "opcode": "ld", "arg": 2, "term": [10, 0, "ld b"], "adr": "indirect"},
+  {"index": 15, "opcode": "add", "arg": 3, "term": [11, 0, "add c"], "adr": "indirect"},
+  {"index": 16, "opcode": "st", "arg": 1, "term": [12, 0, "st a"], "adr": "indirect"},
+  {"index": 17, "opcode": "ld", "arg": 3, "term": [13, 0, "ld c"], "adr": "indirect"},
+  {"index": 18, "opcode": "add", "arg": 1, "term": [14, 0, "add a"], "adr": "indirect"},
+  {"index": 19, "opcode": "st", "arg": 2, "term": [15, 0, "st b"], "adr": "indirect"},
+  {"index": 20, "opcode": "jmp", "arg": 6, "term": [16, 0, "jmp loop"], "adr": "direct"},
+  {"index": 21, "opcode": "ld", "arg": 4, "term": [18, 0, "ld sum"], "adr": "indirect"},
+  {"index": 22, "opcode": "out", "term": [19, 0, "out"], "adr": "indirect"},
+  {"index": 23, "opcode": "hlt", "term": [20, 0, "hlt"], "adr": "indirect"}]
 
-
-out_log: |  
-  DEBUG   control_unit:decode_execute ACC:          0 |AR:     0 |IP:     0 |DR:          0 |SP:   256 |Jump to start
-  DEBUG   control_unit:decode_execute ACC:          0 |AR:     6 |IP:     7 |DR:          6 |SP:   256 |cmp limit
-  DEBUG   control_unit:decode_execute ACC:   -4000000 |AR:     7 |IP:     8 |DR:          5 |SP:   256 |jne end
-  DEBUG   control_unit:decode_execute ACC:   -4000000 |AR:     8 |IP:     9 |DR:         21 |SP:   256 |ld a
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:     9 |IP:    10 |DR:          1 |SP:   256 |add b
-  DEBUG   control_unit:decode_execute ACC:          2 |AR:    10 |IP:    11 |DR:          2 |SP:   256 |st c
-  DEBUG   control_unit:decode_execute ACC:          2 |AR:    11 |IP:    12 |DR:          3 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:          2 |AR:    12 |IP:    13 |DR:          3 |SP:   256 |add sum
-  DEBUG   control_unit:decode_execute ACC:          2 |AR:    13 |IP:    14 |DR:          4 |SP:   256 |st sum
-  DEBUG   control_unit:decode_execute ACC:          2 |AR:    14 |IP:    15 |DR:          4 |SP:   256 |ld b
-  DEBUG   control_unit:decode_execute ACC:          1 |AR:    15 |IP:    16 |DR:          2 |SP:   256 |add c
-  DEBUG   control_unit:decode_execute ACC:          3 |AR:    16 |IP:    17 |DR:          3 |SP:   256 |st a
-  DEBUG   control_unit:decode_execute ACC:          3 |AR:    17 |IP:    18 |DR:          1 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:          2 |AR:    18 |IP:    19 |DR:          3 |SP:   256 |add a
-  DEBUG   control_unit:decode_execute ACC:          5 |AR:    19 |IP:    20 |DR:          1 |SP:   256 |st b
-  DEBUG   control_unit:decode_execute ACC:          5 |AR:    20 |IP:    21 |DR:          2 |SP:   256 |jmp loop
-  DEBUG   control_unit:decode_execute ACC:          5 |AR:     6 |IP:     7 |DR:          6 |SP:   256 |cmp limit
-  DEBUG   control_unit:decode_execute ACC:   -3999995 |AR:     7 |IP:     8 |DR:          5 |SP:   256 |jne end
-  DEBUG   control_unit:decode_execute ACC:   -3999995 |AR:     8 |IP:     9 |DR:         21 |SP:   256 |ld a
-  DEBUG   control_unit:decode_execute ACC:          3 |AR:     9 |IP:    10 |DR:          1 |SP:   256 |add b
-  DEBUG   control_unit:decode_execute ACC:          8 |AR:    10 |IP:    11 |DR:          2 |SP:   256 |st c
-  DEBUG   control_unit:decode_execute ACC:          8 |AR:    11 |IP:    12 |DR:          3 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:          8 |AR:    12 |IP:    13 |DR:          3 |SP:   256 |add sum
-  DEBUG   control_unit:decode_execute ACC:         10 |AR:    13 |IP:    14 |DR:          4 |SP:   256 |st sum
-  DEBUG   control_unit:decode_execute ACC:         10 |AR:    14 |IP:    15 |DR:          4 |SP:   256 |ld b
-  DEBUG   control_unit:decode_execute ACC:          5 |AR:    15 |IP:    16 |DR:          2 |SP:   256 |add c
-  DEBUG   control_unit:decode_execute ACC:         13 |AR:    16 |IP:    17 |DR:          3 |SP:   256 |st a
-  DEBUG   control_unit:decode_execute ACC:         13 |AR:    17 |IP:    18 |DR:          1 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:          8 |AR:    18 |IP:    19 |DR:          3 |SP:   256 |add a
-  DEBUG   control_unit:decode_execute ACC:         21 |AR:    19 |IP:    20 |DR:          1 |SP:   256 |st b
-  DEBUG   control_unit:decode_execute ACC:         21 |AR:    20 |IP:    21 |DR:          2 |SP:   256 |jmp loop
-  DEBUG   control_unit:decode_execute ACC:         21 |AR:     6 |IP:     7 |DR:          6 |SP:   256 |cmp limit
-  DEBUG   control_unit:decode_execute ACC:   -3999979 |AR:     7 |IP:     8 |DR:          5 |SP:   256 |jne end
-  DEBUG   control_unit:decode_execute ACC:   -3999979 |AR:     8 |IP:     9 |DR:         21 |SP:   256 |ld a
-  DEBUG   control_unit:decode_execute ACC:         13 |AR:     9 |IP:    10 |DR:          1 |SP:   256 |add b
-  DEBUG   control_unit:decode_execute ACC:         34 |AR:    10 |IP:    11 |DR:          2 |SP:   256 |st c
-  DEBUG   control_unit:decode_execute ACC:         34 |AR:    11 |IP:    12 |DR:          3 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:         34 |AR:    12 |IP:    13 |DR:          3 |SP:   256 |add sum
-  DEBUG   control_unit:decode_execute ACC:         44 |AR:    13 |IP:    14 |DR:          4 |SP:   256 |st sum
-  DEBUG   control_unit:decode_execute ACC:         44 |AR:    14 |IP:    15 |DR:          4 |SP:   256 |ld b
-  DEBUG   control_unit:decode_execute ACC:         21 |AR:    15 |IP:    16 |DR:          2 |SP:   256 |add c
-  DEBUG   control_unit:decode_execute ACC:         55 |AR:    16 |IP:    17 |DR:          3 |SP:   256 |st a
-  DEBUG   control_unit:decode_execute ACC:         55 |AR:    17 |IP:    18 |DR:          1 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:         34 |AR:    18 |IP:    19 |DR:          3 |SP:   256 |add a
-  DEBUG   control_unit:decode_execute ACC:         89 |AR:    19 |IP:    20 |DR:          1 |SP:   256 |st b
-  DEBUG   control_unit:decode_execute ACC:         89 |AR:    20 |IP:    21 |DR:          2 |SP:   256 |jmp loop
-  DEBUG   control_unit:decode_execute ACC:         89 |AR:     6 |IP:     7 |DR:          6 |SP:   256 |cmp limit
-  DEBUG   control_unit:decode_execute ACC:   -3999911 |AR:     7 |IP:     8 |DR:          5 |SP:   256 |jne end
-  DEBUG   control_unit:decode_execute ACC:   -3999911 |AR:     8 |IP:     9 |DR:         21 |SP:   256 |ld a
-  DEBUG   control_unit:decode_execute ACC:         55 |AR:     9 |IP:    10 |DR:          1 |SP:   256 |add b
-  DEBUG   control_unit:decode_execute ACC:        144 |AR:    10 |IP:    11 |DR:          2 |SP:   256 |st c
-  DEBUG   control_unit:decode_execute ACC:        144 |AR:    11 |IP:    12 |DR:          3 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:        144 |AR:    12 |IP:    13 |DR:          3 |SP:   256 |add sum
-  DEBUG   control_unit:decode_execute ACC:        188 |AR:    13 |IP:    14 |DR:          4 |SP:   256 |st sum
-  DEBUG   control_unit:decode_execute ACC:        188 |AR:    14 |IP:    15 |DR:          4 |SP:   256 |ld b
-  DEBUG   control_unit:decode_execute ACC:         89 |AR:    15 |IP:    16 |DR:          2 |SP:   256 |add c
-  DEBUG   control_unit:decode_execute ACC:        233 |AR:    16 |IP:    17 |DR:          3 |SP:   256 |st a
-  DEBUG   control_unit:decode_execute ACC:        233 |AR:    17 |IP:    18 |DR:          1 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:        144 |AR:    18 |IP:    19 |DR:          3 |SP:   256 |add a
-  DEBUG   control_unit:decode_execute ACC:        377 |AR:    19 |IP:    20 |DR:          1 |SP:   256 |st b
-  DEBUG   control_unit:decode_execute ACC:        377 |AR:    20 |IP:    21 |DR:          2 |SP:   256 |jmp loop
-  DEBUG   control_unit:decode_execute ACC:        377 |AR:     6 |IP:     7 |DR:          6 |SP:   256 |cmp limit
-  DEBUG   control_unit:decode_execute ACC:   -3999623 |AR:     7 |IP:     8 |DR:          5 |SP:   256 |jne end
-  DEBUG   control_unit:decode_execute ACC:   -3999623 |AR:     8 |IP:     9 |DR:         21 |SP:   256 |ld a
-  DEBUG   control_unit:decode_execute ACC:        233 |AR:     9 |IP:    10 |DR:          1 |SP:   256 |add b
-  DEBUG   control_unit:decode_execute ACC:        610 |AR:    10 |IP:    11 |DR:          2 |SP:   256 |st c
-  DEBUG   control_unit:decode_execute ACC:        610 |AR:    11 |IP:    12 |DR:          3 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:        610 |AR:    12 |IP:    13 |DR:          3 |SP:   256 |add sum
-  DEBUG   control_unit:decode_execute ACC:        798 |AR:    13 |IP:    14 |DR:          4 |SP:   256 |st sum
-  DEBUG   control_unit:decode_execute ACC:        798 |AR:    14 |IP:    15 |DR:          4 |SP:   256 |ld b
-  DEBUG   control_unit:decode_execute ACC:        377 |AR:    15 |IP:    16 |DR:          2 |SP:   256 |add c
-  DEBUG   control_unit:decode_execute ACC:        987 |AR:    16 |IP:    17 |DR:          3 |SP:   256 |st a
-  DEBUG   control_unit:decode_execute ACC:        987 |AR:    17 |IP:    18 |DR:          1 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:        610 |AR:    18 |IP:    19 |DR:          3 |SP:   256 |add a
-  DEBUG   control_unit:decode_execute ACC:       1597 |AR:    19 |IP:    20 |DR:          1 |SP:   256 |st b
-  DEBUG   control_unit:decode_execute ACC:       1597 |AR:    20 |IP:    21 |DR:          2 |SP:   256 |jmp loop
-  DEBUG   control_unit:decode_execute ACC:       1597 |AR:     6 |IP:     7 |DR:          6 |SP:   256 |cmp limit
-  DEBUG   control_unit:decode_execute ACC:   -3998403 |AR:     7 |IP:     8 |DR:          5 |SP:   256 |jne end
-  DEBUG   control_unit:decode_execute ACC:   -3998403 |AR:     8 |IP:     9 |DR:         21 |SP:   256 |ld a
-  DEBUG   control_unit:decode_execute ACC:        987 |AR:     9 |IP:    10 |DR:          1 |SP:   256 |add b
-  DEBUG   control_unit:decode_execute ACC:       2584 |AR:    10 |IP:    11 |DR:          2 |SP:   256 |st c
-  DEBUG   control_unit:decode_execute ACC:       2584 |AR:    11 |IP:    12 |DR:          3 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:       2584 |AR:    12 |IP:    13 |DR:          3 |SP:   256 |add sum
-  DEBUG   control_unit:decode_execute ACC:       3382 |AR:    13 |IP:    14 |DR:          4 |SP:   256 |st sum
-  DEBUG   control_unit:decode_execute ACC:       3382 |AR:    14 |IP:    15 |DR:          4 |SP:   256 |ld b
-  DEBUG   control_unit:decode_execute ACC:       1597 |AR:    15 |IP:    16 |DR:          2 |SP:   256 |add c
-  DEBUG   control_unit:decode_execute ACC:       4181 |AR:    16 |IP:    17 |DR:          3 |SP:   256 |st a
-  DEBUG   control_unit:decode_execute ACC:       4181 |AR:    17 |IP:    18 |DR:          1 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:       2584 |AR:    18 |IP:    19 |DR:          3 |SP:   256 |add a
-  DEBUG   control_unit:decode_execute ACC:       6765 |AR:    19 |IP:    20 |DR:          1 |SP:   256 |st b
-  DEBUG   control_unit:decode_execute ACC:       6765 |AR:    20 |IP:    21 |DR:          2 |SP:   256 |jmp loop
-  DEBUG   control_unit:decode_execute ACC:       6765 |AR:     6 |IP:     7 |DR:          6 |SP:   256 |cmp limit
-  DEBUG   control_unit:decode_execute ACC:   -3993235 |AR:     7 |IP:     8 |DR:          5 |SP:   256 |jne end
-  DEBUG   control_unit:decode_execute ACC:   -3993235 |AR:     8 |IP:     9 |DR:         21 |SP:   256 |ld a
-  DEBUG   control_unit:decode_execute ACC:       4181 |AR:     9 |IP:    10 |DR:          1 |SP:   256 |add b
-  DEBUG   control_unit:decode_execute ACC:      10946 |AR:    10 |IP:    11 |DR:          2 |SP:   256 |st c
-  DEBUG   control_unit:decode_execute ACC:      10946 |AR:    11 |IP:    12 |DR:          3 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:      10946 |AR:    12 |IP:    13 |DR:          3 |SP:   256 |add sum
-  DEBUG   control_unit:decode_execute ACC:      14328 |AR:    13 |IP:    14 |DR:          4 |SP:   256 |st sum
-  DEBUG   control_unit:decode_execute ACC:      14328 |AR:    14 |IP:    15 |DR:          4 |SP:   256 |ld b
-  DEBUG   control_unit:decode_execute ACC:       6765 |AR:    15 |IP:    16 |DR:          2 |SP:   256 |add c
-  DEBUG   control_unit:decode_execute ACC:      17711 |AR:    16 |IP:    17 |DR:          3 |SP:   256 |st a
-  DEBUG   control_unit:decode_execute ACC:      17711 |AR:    17 |IP:    18 |DR:          1 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:      10946 |AR:    18 |IP:    19 |DR:          3 |SP:   256 |add a
-  DEBUG   control_unit:decode_execute ACC:      28657 |AR:    19 |IP:    20 |DR:          1 |SP:   256 |st b
-  DEBUG   control_unit:decode_execute ACC:      28657 |AR:    20 |IP:    21 |DR:          2 |SP:   256 |jmp loop
-  DEBUG   control_unit:decode_execute ACC:      28657 |AR:     6 |IP:     7 |DR:          6 |SP:   256 |cmp limit
-  DEBUG   control_unit:decode_execute ACC:   -3971343 |AR:     7 |IP:     8 |DR:          5 |SP:   256 |jne end
-  DEBUG   control_unit:decode_execute ACC:   -3971343 |AR:     8 |IP:     9 |DR:         21 |SP:   256 |ld a
-  DEBUG   control_unit:decode_execute ACC:      17711 |AR:     9 |IP:    10 |DR:          1 |SP:   256 |add b
-  DEBUG   control_unit:decode_execute ACC:      46368 |AR:    10 |IP:    11 |DR:          2 |SP:   256 |st c
-  DEBUG   control_unit:decode_execute ACC:      46368 |AR:    11 |IP:    12 |DR:          3 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:      46368 |AR:    12 |IP:    13 |DR:          3 |SP:   256 |add sum
-  DEBUG   control_unit:decode_execute ACC:      60696 |AR:    13 |IP:    14 |DR:          4 |SP:   256 |st sum
-  DEBUG   control_unit:decode_execute ACC:      60696 |AR:    14 |IP:    15 |DR:          4 |SP:   256 |ld b
-  DEBUG   control_unit:decode_execute ACC:      28657 |AR:    15 |IP:    16 |DR:          2 |SP:   256 |add c
-  DEBUG   control_unit:decode_execute ACC:      75025 |AR:    16 |IP:    17 |DR:          3 |SP:   256 |st a
-  DEBUG   control_unit:decode_execute ACC:      75025 |AR:    17 |IP:    18 |DR:          1 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:      46368 |AR:    18 |IP:    19 |DR:          3 |SP:   256 |add a
-  DEBUG   control_unit:decode_execute ACC:     121393 |AR:    19 |IP:    20 |DR:          1 |SP:   256 |st b
-  DEBUG   control_unit:decode_execute ACC:     121393 |AR:    20 |IP:    21 |DR:          2 |SP:   256 |jmp loop
-  DEBUG   control_unit:decode_execute ACC:     121393 |AR:     6 |IP:     7 |DR:          6 |SP:   256 |cmp limit
-  DEBUG   control_unit:decode_execute ACC:   -3878607 |AR:     7 |IP:     8 |DR:          5 |SP:   256 |jne end
-  DEBUG   control_unit:decode_execute ACC:   -3878607 |AR:     8 |IP:     9 |DR:         21 |SP:   256 |ld a
-  DEBUG   control_unit:decode_execute ACC:      75025 |AR:     9 |IP:    10 |DR:          1 |SP:   256 |add b
-  DEBUG   control_unit:decode_execute ACC:     196418 |AR:    10 |IP:    11 |DR:          2 |SP:   256 |st c
-  DEBUG   control_unit:decode_execute ACC:     196418 |AR:    11 |IP:    12 |DR:          3 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:     196418 |AR:    12 |IP:    13 |DR:          3 |SP:   256 |add sum
-  DEBUG   control_unit:decode_execute ACC:     257114 |AR:    13 |IP:    14 |DR:          4 |SP:   256 |st sum
-  DEBUG   control_unit:decode_execute ACC:     257114 |AR:    14 |IP:    15 |DR:          4 |SP:   256 |ld b
-  DEBUG   control_unit:decode_execute ACC:     121393 |AR:    15 |IP:    16 |DR:          2 |SP:   256 |add c
-  DEBUG   control_unit:decode_execute ACC:     317811 |AR:    16 |IP:    17 |DR:          3 |SP:   256 |st a
-  DEBUG   control_unit:decode_execute ACC:     317811 |AR:    17 |IP:    18 |DR:          1 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:     196418 |AR:    18 |IP:    19 |DR:          3 |SP:   256 |add a
-  DEBUG   control_unit:decode_execute ACC:     514229 |AR:    19 |IP:    20 |DR:          1 |SP:   256 |st b
-  DEBUG   control_unit:decode_execute ACC:     514229 |AR:    20 |IP:    21 |DR:          2 |SP:   256 |jmp loop
-  DEBUG   control_unit:decode_execute ACC:     514229 |AR:     6 |IP:     7 |DR:          6 |SP:   256 |cmp limit
-  DEBUG   control_unit:decode_execute ACC:   -3485771 |AR:     7 |IP:     8 |DR:          5 |SP:   256 |jne end
-  DEBUG   control_unit:decode_execute ACC:   -3485771 |AR:     8 |IP:     9 |DR:         21 |SP:   256 |ld a
-  DEBUG   control_unit:decode_execute ACC:     317811 |AR:     9 |IP:    10 |DR:          1 |SP:   256 |add b
-  DEBUG   control_unit:decode_execute ACC:     832040 |AR:    10 |IP:    11 |DR:          2 |SP:   256 |st c
-  DEBUG   control_unit:decode_execute ACC:     832040 |AR:    11 |IP:    12 |DR:          3 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:     832040 |AR:    12 |IP:    13 |DR:          3 |SP:   256 |add sum
-  DEBUG   control_unit:decode_execute ACC:    1089154 |AR:    13 |IP:    14 |DR:          4 |SP:   256 |st sum
-  DEBUG   control_unit:decode_execute ACC:    1089154 |AR:    14 |IP:    15 |DR:          4 |SP:   256 |ld b
-  DEBUG   control_unit:decode_execute ACC:     514229 |AR:    15 |IP:    16 |DR:          2 |SP:   256 |add c
-  DEBUG   control_unit:decode_execute ACC:    1346269 |AR:    16 |IP:    17 |DR:          3 |SP:   256 |st a
-  DEBUG   control_unit:decode_execute ACC:    1346269 |AR:    17 |IP:    18 |DR:          1 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:     832040 |AR:    18 |IP:    19 |DR:          3 |SP:   256 |add a
-  DEBUG   control_unit:decode_execute ACC:    2178309 |AR:    19 |IP:    20 |DR:          1 |SP:   256 |st b
-  DEBUG   control_unit:decode_execute ACC:    2178309 |AR:    20 |IP:    21 |DR:          2 |SP:   256 |jmp loop
-  DEBUG   control_unit:decode_execute ACC:    2178309 |AR:     6 |IP:     7 |DR:          6 |SP:   256 |cmp limit
-  DEBUG   control_unit:decode_execute ACC:   -1821691 |AR:     7 |IP:     8 |DR:          5 |SP:   256 |jne end
-  DEBUG   control_unit:decode_execute ACC:   -1821691 |AR:     8 |IP:     9 |DR:         21 |SP:   256 |ld a
-  DEBUG   control_unit:decode_execute ACC:    1346269 |AR:     9 |IP:    10 |DR:          1 |SP:   256 |add b
-  DEBUG   control_unit:decode_execute ACC:    3524578 |AR:    10 |IP:    11 |DR:          2 |SP:   256 |st c
-  DEBUG   control_unit:decode_execute ACC:    3524578 |AR:    11 |IP:    12 |DR:          3 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:    3524578 |AR:    12 |IP:    13 |DR:          3 |SP:   256 |add sum
-  DEBUG   control_unit:decode_execute ACC:    4613732 |AR:    13 |IP:    14 |DR:          4 |SP:   256 |st sum
-  DEBUG   control_unit:decode_execute ACC:    4613732 |AR:    14 |IP:    15 |DR:          4 |SP:   256 |ld b
-  DEBUG   control_unit:decode_execute ACC:    2178309 |AR:    15 |IP:    16 |DR:          2 |SP:   256 |add c
-  DEBUG   control_unit:decode_execute ACC:    5702887 |AR:    16 |IP:    17 |DR:          3 |SP:   256 |st a
-  DEBUG   control_unit:decode_execute ACC:    5702887 |AR:    17 |IP:    18 |DR:          1 |SP:   256 |ld c
-  DEBUG   control_unit:decode_execute ACC:    3524578 |AR:    18 |IP:    19 |DR:          3 |SP:   256 |add a
-  DEBUG   control_unit:decode_execute ACC:    9227465 |AR:    19 |IP:    20 |DR:          1 |SP:   256 |st b
-  DEBUG   control_unit:decode_execute ACC:    9227465 |AR:    20 |IP:    21 |DR:          2 |SP:   256 |jmp loop
-  DEBUG   control_unit:decode_execute ACC:    9227465 |AR:     6 |IP:     7 |DR:          6 |SP:   256 |cmp limit
-  DEBUG   control_unit:decode_execute ACC:    5227465 |AR:     7 |IP:     8 |DR:          5 |SP:   256 |jne end
-  DEBUG   control_unit:decode_execute ACC:    5227465 |AR:    21 |IP:    22 |DR:         21 |SP:   256 |ld sum
-  DEBUG   control_unit:decode_execute ACC:    4613732 |AR:    22 |IP:    23 |DR:          4 |SP:   256 |out
-  DEBUG   control_unit:decode_execute ACC:    4613732 |AR:    23 |IP:    24 |DR:          4 |SP:   256 |hlt
+out_log: |
+  DEBUG   control_unit:decode_execute ACC:          0 |AR:     0 |IP:     6 |DR:          6 |SP:   256 | TICK:       2 |Jump to start
+  DEBUG   control_unit:decode_execute ACC:          0 |AR:     6 |IP:     7 |DR:          5 |SP:   256 | TICK:       6 |cmp limit
+  DEBUG   control_unit:decode_execute ACC:          0 |AR:     7 |IP:     8 |DR:         21 |SP:   256 | TICK:       8 |jne end
+  DEBUG   control_unit:decode_execute ACC:          1 |AR:     8 |IP:     9 |DR:          1 |SP:   256 | TICK:      12 |ld a
+  DEBUG   control_unit:decode_execute ACC:          2 |AR:     9 |IP:    10 |DR:          2 |SP:   256 | TICK:      16 |add b
+  DEBUG   control_unit:decode_execute ACC:          2 |AR:    10 |IP:    11 |DR:          3 |SP:   256 | TICK:      21 |st c
+  DEBUG   control_unit:decode_execute ACC:          2 |AR:    11 |IP:    12 |DR:          3 |SP:   256 | TICK:      25 |ld c
+  DEBUG   control_unit:decode_execute ACC:          2 |AR:    12 |IP:    13 |DR:          4 |SP:   256 | TICK:      29 |add sum
+  DEBUG   control_unit:decode_execute ACC:          2 |AR:    13 |IP:    14 |DR:          4 |SP:   256 | TICK:      34 |st sum
+  DEBUG   control_unit:decode_execute ACC:          1 |AR:    14 |IP:    15 |DR:          2 |SP:   256 | TICK:      38 |ld b
+  DEBUG   control_unit:decode_execute ACC:          3 |AR:    15 |IP:    16 |DR:          3 |SP:   256 | TICK:      42 |add c
+  DEBUG   control_unit:decode_execute ACC:          3 |AR:    16 |IP:    17 |DR:          1 |SP:   256 | TICK:      47 |st a
+  DEBUG   control_unit:decode_execute ACC:          2 |AR:    17 |IP:    18 |DR:          3 |SP:   256 | TICK:      51 |ld c
+  DEBUG   control_unit:decode_execute ACC:          5 |AR:    18 |IP:    19 |DR:          1 |SP:   256 | TICK:      55 |add a
+  DEBUG   control_unit:decode_execute ACC:          5 |AR:    19 |IP:    20 |DR:          2 |SP:   256 | TICK:      60 |st b
+  DEBUG   control_unit:decode_execute ACC:          5 |AR:    20 |IP:     6 |DR:          6 |SP:   256 | TICK:      62 |jmp loop
+  DEBUG   control_unit:decode_execute ACC:          5 |AR:     6 |IP:     7 |DR:          5 |SP:   256 | TICK:      66 |cmp limit
+  DEBUG   control_unit:decode_execute ACC:          5 |AR:     7 |IP:     8 |DR:         21 |SP:   256 | TICK:      68 |jne end
+  DEBUG   control_unit:decode_execute ACC:          3 |AR:     8 |IP:     9 |DR:          1 |SP:   256 | TICK:      72 |ld a
+  DEBUG   control_unit:decode_execute ACC:          8 |AR:     9 |IP:    10 |DR:          2 |SP:   256 | TICK:      76 |add b
+  DEBUG   control_unit:decode_execute ACC:          8 |AR:    10 |IP:    11 |DR:          3 |SP:   256 | TICK:      81 |st c
+  DEBUG   control_unit:decode_execute ACC:          8 |AR:    11 |IP:    12 |DR:          3 |SP:   256 | TICK:      85 |ld c
+  DEBUG   control_unit:decode_execute ACC:         10 |AR:    12 |IP:    13 |DR:          4 |SP:   256 | TICK:      89 |add sum
+  DEBUG   control_unit:decode_execute ACC:         10 |AR:    13 |IP:    14 |DR:          4 |SP:   256 | TICK:      94 |st sum
+  DEBUG   control_unit:decode_execute ACC:          5 |AR:    14 |IP:    15 |DR:          2 |SP:   256 | TICK:      98 |ld b
+  DEBUG   control_unit:decode_execute ACC:         13 |AR:    15 |IP:    16 |DR:          3 |SP:   256 | TICK:     102 |add c
+  DEBUG   control_unit:decode_execute ACC:         13 |AR:    16 |IP:    17 |DR:          1 |SP:   256 | TICK:     107 |st a
+  DEBUG   control_unit:decode_execute ACC:          8 |AR:    17 |IP:    18 |DR:          3 |SP:   256 | TICK:     111 |ld c
+  DEBUG   control_unit:decode_execute ACC:         21 |AR:    18 |IP:    19 |DR:          1 |SP:   256 | TICK:     115 |add a
+  DEBUG   control_unit:decode_execute ACC:         21 |AR:    19 |IP:    20 |DR:          2 |SP:   256 | TICK:     120 |st b
+  DEBUG   control_unit:decode_execute ACC:         21 |AR:    20 |IP:     6 |DR:          6 |SP:   256 | TICK:     122 |jmp loop
+  DEBUG   control_unit:decode_execute ACC:         21 |AR:     6 |IP:     7 |DR:          5 |SP:   256 | TICK:     126 |cmp limit
+  DEBUG   control_unit:decode_execute ACC:         21 |AR:     7 |IP:     8 |DR:         21 |SP:   256 | TICK:     128 |jne end
+  DEBUG   control_unit:decode_execute ACC:         13 |AR:     8 |IP:     9 |DR:          1 |SP:   256 | TICK:     132 |ld a
+  DEBUG   control_unit:decode_execute ACC:         34 |AR:     9 |IP:    10 |DR:          2 |SP:   256 | TICK:     136 |add b
+  DEBUG   control_unit:decode_execute ACC:         34 |AR:    10 |IP:    11 |DR:          3 |SP:   256 | TICK:     141 |st c
+  DEBUG   control_unit:decode_execute ACC:         34 |AR:    11 |IP:    12 |DR:          3 |SP:   256 | TICK:     145 |ld c
+  DEBUG   control_unit:decode_execute ACC:         44 |AR:    12 |IP:    13 |DR:          4 |SP:   256 | TICK:     149 |add sum
+  DEBUG   control_unit:decode_execute ACC:         44 |AR:    13 |IP:    14 |DR:          4 |SP:   256 | TICK:     154 |st sum
+  DEBUG   control_unit:decode_execute ACC:         21 |AR:    14 |IP:    15 |DR:          2 |SP:   256 | TICK:     158 |ld b
+  DEBUG   control_unit:decode_execute ACC:         55 |AR:    15 |IP:    16 |DR:          3 |SP:   256 | TICK:     162 |add c
+  DEBUG   control_unit:decode_execute ACC:         55 |AR:    16 |IP:    17 |DR:          1 |SP:   256 | TICK:     167 |st a
+  DEBUG   control_unit:decode_execute ACC:         34 |AR:    17 |IP:    18 |DR:          3 |SP:   256 | TICK:     171 |ld c
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:    18 |IP:    19 |DR:          1 |SP:   256 | TICK:     175 |add a
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:    19 |IP:    20 |DR:          2 |SP:   256 | TICK:     180 |st b
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:    20 |IP:     6 |DR:          6 |SP:   256 | TICK:     182 |jmp loop
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:     6 |IP:     7 |DR:          5 |SP:   256 | TICK:     186 |cmp limit
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:     7 |IP:     8 |DR:         21 |SP:   256 | TICK:     188 |jne end
+  DEBUG   control_unit:decode_execute ACC:         55 |AR:     8 |IP:     9 |DR:          1 |SP:   256 | TICK:     192 |ld a
+  DEBUG   control_unit:decode_execute ACC:        144 |AR:     9 |IP:    10 |DR:          2 |SP:   256 | TICK:     196 |add b
+  DEBUG   control_unit:decode_execute ACC:        144 |AR:    10 |IP:    11 |DR:          3 |SP:   256 | TICK:     201 |st c
+  DEBUG   control_unit:decode_execute ACC:        144 |AR:    11 |IP:    12 |DR:          3 |SP:   256 | TICK:     205 |ld c
+  DEBUG   control_unit:decode_execute ACC:        188 |AR:    12 |IP:    13 |DR:          4 |SP:   256 | TICK:     209 |add sum
+  DEBUG   control_unit:decode_execute ACC:        188 |AR:    13 |IP:    14 |DR:          4 |SP:   256 | TICK:     214 |st sum
+  DEBUG   control_unit:decode_execute ACC:         89 |AR:    14 |IP:    15 |DR:          2 |SP:   256 | TICK:     218 |ld b
+  DEBUG   control_unit:decode_execute ACC:        233 |AR:    15 |IP:    16 |DR:          3 |SP:   256 | TICK:     222 |add c
+  DEBUG   control_unit:decode_execute ACC:        233 |AR:    16 |IP:    17 |DR:          1 |SP:   256 | TICK:     227 |st a
+  DEBUG   control_unit:decode_execute ACC:        144 |AR:    17 |IP:    18 |DR:          3 |SP:   256 | TICK:     231 |ld c
+  DEBUG   control_unit:decode_execute ACC:        377 |AR:    18 |IP:    19 |DR:          1 |SP:   256 | TICK:     235 |add a
+  DEBUG   control_unit:decode_execute ACC:        377 |AR:    19 |IP:    20 |DR:          2 |SP:   256 | TICK:     240 |st b
+  DEBUG   control_unit:decode_execute ACC:        377 |AR:    20 |IP:     6 |DR:          6 |SP:   256 | TICK:     242 |jmp loop
+  DEBUG   control_unit:decode_execute ACC:        377 |AR:     6 |IP:     7 |DR:          5 |SP:   256 | TICK:     246 |cmp limit
+  DEBUG   control_unit:decode_execute ACC:        377 |AR:     7 |IP:     8 |DR:         21 |SP:   256 | TICK:     248 |jne end
+  DEBUG   control_unit:decode_execute ACC:        233 |AR:     8 |IP:     9 |DR:          1 |SP:   256 | TICK:     252 |ld a
+  DEBUG   control_unit:decode_execute ACC:        610 |AR:     9 |IP:    10 |DR:          2 |SP:   256 | TICK:     256 |add b
+  DEBUG   control_unit:decode_execute ACC:        610 |AR:    10 |IP:    11 |DR:          3 |SP:   256 | TICK:     261 |st c
+  DEBUG   control_unit:decode_execute ACC:        610 |AR:    11 |IP:    12 |DR:          3 |SP:   256 | TICK:     265 |ld c
+  DEBUG   control_unit:decode_execute ACC:        798 |AR:    12 |IP:    13 |DR:          4 |SP:   256 | TICK:     269 |add sum
+  DEBUG   control_unit:decode_execute ACC:        798 |AR:    13 |IP:    14 |DR:          4 |SP:   256 | TICK:     274 |st sum
+  DEBUG   control_unit:decode_execute ACC:        377 |AR:    14 |IP:    15 |DR:          2 |SP:   256 | TICK:     278 |ld b
+  DEBUG   control_unit:decode_execute ACC:        987 |AR:    15 |IP:    16 |DR:          3 |SP:   256 | TICK:     282 |add c
+  DEBUG   control_unit:decode_execute ACC:        987 |AR:    16 |IP:    17 |DR:          1 |SP:   256 | TICK:     287 |st a
+  DEBUG   control_unit:decode_execute ACC:        610 |AR:    17 |IP:    18 |DR:          3 |SP:   256 | TICK:     291 |ld c
+  DEBUG   control_unit:decode_execute ACC:       1597 |AR:    18 |IP:    19 |DR:          1 |SP:   256 | TICK:     295 |add a
+  DEBUG   control_unit:decode_execute ACC:       1597 |AR:    19 |IP:    20 |DR:          2 |SP:   256 | TICK:     300 |st b
+  DEBUG   control_unit:decode_execute ACC:       1597 |AR:    20 |IP:     6 |DR:          6 |SP:   256 | TICK:     302 |jmp loop
+  DEBUG   control_unit:decode_execute ACC:       1597 |AR:     6 |IP:     7 |DR:          5 |SP:   256 | TICK:     306 |cmp limit
+  DEBUG   control_unit:decode_execute ACC:       1597 |AR:     7 |IP:     8 |DR:         21 |SP:   256 | TICK:     308 |jne end
+  DEBUG   control_unit:decode_execute ACC:        987 |AR:     8 |IP:     9 |DR:          1 |SP:   256 | TICK:     312 |ld a
+  DEBUG   control_unit:decode_execute ACC:       2584 |AR:     9 |IP:    10 |DR:          2 |SP:   256 | TICK:     316 |add b
+  DEBUG   control_unit:decode_execute ACC:       2584 |AR:    10 |IP:    11 |DR:          3 |SP:   256 | TICK:     321 |st c
+  DEBUG   control_unit:decode_execute ACC:       2584 |AR:    11 |IP:    12 |DR:          3 |SP:   256 | TICK:     325 |ld c
+  DEBUG   control_unit:decode_execute ACC:       3382 |AR:    12 |IP:    13 |DR:          4 |SP:   256 | TICK:     329 |add sum
+  DEBUG   control_unit:decode_execute ACC:       3382 |AR:    13 |IP:    14 |DR:          4 |SP:   256 | TICK:     334 |st sum
+  DEBUG   control_unit:decode_execute ACC:       1597 |AR:    14 |IP:    15 |DR:          2 |SP:   256 | TICK:     338 |ld b
+  DEBUG   control_unit:decode_execute ACC:       4181 |AR:    15 |IP:    16 |DR:          3 |SP:   256 | TICK:     342 |add c
+  DEBUG   control_unit:decode_execute ACC:       4181 |AR:    16 |IP:    17 |DR:          1 |SP:   256 | TICK:     347 |st a
+  DEBUG   control_unit:decode_execute ACC:       2584 |AR:    17 |IP:    18 |DR:          3 |SP:   256 | TICK:     351 |ld c
+  DEBUG   control_unit:decode_execute ACC:       6765 |AR:    18 |IP:    19 |DR:          1 |SP:   256 | TICK:     355 |add a
+  DEBUG   control_unit:decode_execute ACC:       6765 |AR:    19 |IP:    20 |DR:          2 |SP:   256 | TICK:     360 |st b
+  DEBUG   control_unit:decode_execute ACC:       6765 |AR:    20 |IP:     6 |DR:          6 |SP:   256 | TICK:     362 |jmp loop
+  DEBUG   control_unit:decode_execute ACC:       6765 |AR:     6 |IP:     7 |DR:          5 |SP:   256 | TICK:     366 |cmp limit
+  DEBUG   control_unit:decode_execute ACC:       6765 |AR:     7 |IP:     8 |DR:         21 |SP:   256 | TICK:     368 |jne end
+  DEBUG   control_unit:decode_execute ACC:       4181 |AR:     8 |IP:     9 |DR:          1 |SP:   256 | TICK:     372 |ld a
+  DEBUG   control_unit:decode_execute ACC:      10946 |AR:     9 |IP:    10 |DR:          2 |SP:   256 | TICK:     376 |add b
+  DEBUG   control_unit:decode_execute ACC:      10946 |AR:    10 |IP:    11 |DR:          3 |SP:   256 | TICK:     381 |st c
+  DEBUG   control_unit:decode_execute ACC:      10946 |AR:    11 |IP:    12 |DR:          3 |SP:   256 | TICK:     385 |ld c
+  DEBUG   control_unit:decode_execute ACC:      14328 |AR:    12 |IP:    13 |DR:          4 |SP:   256 | TICK:     389 |add sum
+  DEBUG   control_unit:decode_execute ACC:      14328 |AR:    13 |IP:    14 |DR:          4 |SP:   256 | TICK:     394 |st sum
+  DEBUG   control_unit:decode_execute ACC:       6765 |AR:    14 |IP:    15 |DR:          2 |SP:   256 | TICK:     398 |ld b
+  DEBUG   control_unit:decode_execute ACC:      17711 |AR:    15 |IP:    16 |DR:          3 |SP:   256 | TICK:     402 |add c
+  DEBUG   control_unit:decode_execute ACC:      17711 |AR:    16 |IP:    17 |DR:          1 |SP:   256 | TICK:     407 |st a
+  DEBUG   control_unit:decode_execute ACC:      10946 |AR:    17 |IP:    18 |DR:          3 |SP:   256 | TICK:     411 |ld c
+  DEBUG   control_unit:decode_execute ACC:      28657 |AR:    18 |IP:    19 |DR:          1 |SP:   256 | TICK:     415 |add a
+  DEBUG   control_unit:decode_execute ACC:      28657 |AR:    19 |IP:    20 |DR:          2 |SP:   256 | TICK:     420 |st b
+  DEBUG   control_unit:decode_execute ACC:      28657 |AR:    20 |IP:     6 |DR:          6 |SP:   256 | TICK:     422 |jmp loop
+  DEBUG   control_unit:decode_execute ACC:      28657 |AR:     6 |IP:     7 |DR:          5 |SP:   256 | TICK:     426 |cmp limit
+  DEBUG   control_unit:decode_execute ACC:      28657 |AR:     7 |IP:     8 |DR:         21 |SP:   256 | TICK:     428 |jne end
+  DEBUG   control_unit:decode_execute ACC:      17711 |AR:     8 |IP:     9 |DR:          1 |SP:   256 | TICK:     432 |ld a
+  DEBUG   control_unit:decode_execute ACC:      46368 |AR:     9 |IP:    10 |DR:          2 |SP:   256 | TICK:     436 |add b
+  DEBUG   control_unit:decode_execute ACC:      46368 |AR:    10 |IP:    11 |DR:          3 |SP:   256 | TICK:     441 |st c
+  DEBUG   control_unit:decode_execute ACC:      46368 |AR:    11 |IP:    12 |DR:          3 |SP:   256 | TICK:     445 |ld c
+  DEBUG   control_unit:decode_execute ACC:      60696 |AR:    12 |IP:    13 |DR:          4 |SP:   256 | TICK:     449 |add sum
+  DEBUG   control_unit:decode_execute ACC:      60696 |AR:    13 |IP:    14 |DR:          4 |SP:   256 | TICK:     454 |st sum
+  DEBUG   control_unit:decode_execute ACC:      28657 |AR:    14 |IP:    15 |DR:          2 |SP:   256 | TICK:     458 |ld b
+  DEBUG   control_unit:decode_execute ACC:      75025 |AR:    15 |IP:    16 |DR:          3 |SP:   256 | TICK:     462 |add c
+  DEBUG   control_unit:decode_execute ACC:      75025 |AR:    16 |IP:    17 |DR:          1 |SP:   256 | TICK:     467 |st a
+  DEBUG   control_unit:decode_execute ACC:      46368 |AR:    17 |IP:    18 |DR:          3 |SP:   256 | TICK:     471 |ld c
+  DEBUG   control_unit:decode_execute ACC:     121393 |AR:    18 |IP:    19 |DR:          1 |SP:   256 | TICK:     475 |add a
+  DEBUG   control_unit:decode_execute ACC:     121393 |AR:    19 |IP:    20 |DR:          2 |SP:   256 | TICK:     480 |st b
+  DEBUG   control_unit:decode_execute ACC:     121393 |AR:    20 |IP:     6 |DR:          6 |SP:   256 | TICK:     482 |jmp loop
+  DEBUG   control_unit:decode_execute ACC:     121393 |AR:     6 |IP:     7 |DR:          5 |SP:   256 | TICK:     486 |cmp limit
+  DEBUG   control_unit:decode_execute ACC:     121393 |AR:     7 |IP:     8 |DR:         21 |SP:   256 | TICK:     488 |jne end
+  DEBUG   control_unit:decode_execute ACC:      75025 |AR:     8 |IP:     9 |DR:          1 |SP:   256 | TICK:     492 |ld a
+  DEBUG   control_unit:decode_execute ACC:     196418 |AR:     9 |IP:    10 |DR:          2 |SP:   256 | TICK:     496 |add b
+  DEBUG   control_unit:decode_execute ACC:     196418 |AR:    10 |IP:    11 |DR:          3 |SP:   256 | TICK:     501 |st c
+  DEBUG   control_unit:decode_execute ACC:     196418 |AR:    11 |IP:    12 |DR:          3 |SP:   256 | TICK:     505 |ld c
+  DEBUG   control_unit:decode_execute ACC:     257114 |AR:    12 |IP:    13 |DR:          4 |SP:   256 | TICK:     509 |add sum
+  DEBUG   control_unit:decode_execute ACC:     257114 |AR:    13 |IP:    14 |DR:          4 |SP:   256 | TICK:     514 |st sum
+  DEBUG   control_unit:decode_execute ACC:     121393 |AR:    14 |IP:    15 |DR:          2 |SP:   256 | TICK:     518 |ld b
+  DEBUG   control_unit:decode_execute ACC:     317811 |AR:    15 |IP:    16 |DR:          3 |SP:   256 | TICK:     522 |add c
+  DEBUG   control_unit:decode_execute ACC:     317811 |AR:    16 |IP:    17 |DR:          1 |SP:   256 | TICK:     527 |st a
+  DEBUG   control_unit:decode_execute ACC:     196418 |AR:    17 |IP:    18 |DR:          3 |SP:   256 | TICK:     531 |ld c
+  DEBUG   control_unit:decode_execute ACC:     514229 |AR:    18 |IP:    19 |DR:          1 |SP:   256 | TICK:     535 |add a
+  DEBUG   control_unit:decode_execute ACC:     514229 |AR:    19 |IP:    20 |DR:          2 |SP:   256 | TICK:     540 |st b
+  DEBUG   control_unit:decode_execute ACC:     514229 |AR:    20 |IP:     6 |DR:          6 |SP:   256 | TICK:     542 |jmp loop
+  DEBUG   control_unit:decode_execute ACC:     514229 |AR:     6 |IP:     7 |DR:          5 |SP:   256 | TICK:     546 |cmp limit
+  DEBUG   control_unit:decode_execute ACC:     514229 |AR:     7 |IP:     8 |DR:         21 |SP:   256 | TICK:     548 |jne end
+  DEBUG   control_unit:decode_execute ACC:     317811 |AR:     8 |IP:     9 |DR:          1 |SP:   256 | TICK:     552 |ld a
+  DEBUG   control_unit:decode_execute ACC:     832040 |AR:     9 |IP:    10 |DR:          2 |SP:   256 | TICK:     556 |add b
+  DEBUG   control_unit:decode_execute ACC:     832040 |AR:    10 |IP:    11 |DR:          3 |SP:   256 | TICK:     561 |st c
+  DEBUG   control_unit:decode_execute ACC:     832040 |AR:    11 |IP:    12 |DR:          3 |SP:   256 | TICK:     565 |ld c
+  DEBUG   control_unit:decode_execute ACC:    1089154 |AR:    12 |IP:    13 |DR:          4 |SP:   256 | TICK:     569 |add sum
+  DEBUG   control_unit:decode_execute ACC:    1089154 |AR:    13 |IP:    14 |DR:          4 |SP:   256 | TICK:     574 |st sum
+  DEBUG   control_unit:decode_execute ACC:     514229 |AR:    14 |IP:    15 |DR:          2 |SP:   256 | TICK:     578 |ld b
+  DEBUG   control_unit:decode_execute ACC:    1346269 |AR:    15 |IP:    16 |DR:          3 |SP:   256 | TICK:     582 |add c
+  DEBUG   control_unit:decode_execute ACC:    1346269 |AR:    16 |IP:    17 |DR:          1 |SP:   256 | TICK:     587 |st a
+  DEBUG   control_unit:decode_execute ACC:     832040 |AR:    17 |IP:    18 |DR:          3 |SP:   256 | TICK:     591 |ld c
+  DEBUG   control_unit:decode_execute ACC:    2178309 |AR:    18 |IP:    19 |DR:          1 |SP:   256 | TICK:     595 |add a
+  DEBUG   control_unit:decode_execute ACC:    2178309 |AR:    19 |IP:    20 |DR:          2 |SP:   256 | TICK:     600 |st b
+  DEBUG   control_unit:decode_execute ACC:    2178309 |AR:    20 |IP:     6 |DR:          6 |SP:   256 | TICK:     602 |jmp loop
+  DEBUG   control_unit:decode_execute ACC:    2178309 |AR:     6 |IP:     7 |DR:          5 |SP:   256 | TICK:     606 |cmp limit
+  DEBUG   control_unit:decode_execute ACC:    2178309 |AR:     7 |IP:     8 |DR:         21 |SP:   256 | TICK:     608 |jne end
+  DEBUG   control_unit:decode_execute ACC:    1346269 |AR:     8 |IP:     9 |DR:          1 |SP:   256 | TICK:     612 |ld a
+  DEBUG   control_unit:decode_execute ACC:    3524578 |AR:     9 |IP:    10 |DR:          2 |SP:   256 | TICK:     616 |add b
+  DEBUG   control_unit:decode_execute ACC:    3524578 |AR:    10 |IP:    11 |DR:          3 |SP:   256 | TICK:     621 |st c
+  DEBUG   control_unit:decode_execute ACC:    3524578 |AR:    11 |IP:    12 |DR:          3 |SP:   256 | TICK:     625 |ld c
+  DEBUG   control_unit:decode_execute ACC:    4613732 |AR:    12 |IP:    13 |DR:          4 |SP:   256 | TICK:     629 |add sum
+  DEBUG   control_unit:decode_execute ACC:    4613732 |AR:    13 |IP:    14 |DR:          4 |SP:   256 | TICK:     634 |st sum
+  DEBUG   control_unit:decode_execute ACC:    2178309 |AR:    14 |IP:    15 |DR:          2 |SP:   256 | TICK:     638 |ld b
+  DEBUG   control_unit:decode_execute ACC:    5702887 |AR:    15 |IP:    16 |DR:          3 |SP:   256 | TICK:     642 |add c
+  DEBUG   control_unit:decode_execute ACC:    5702887 |AR:    16 |IP:    17 |DR:          1 |SP:   256 | TICK:     647 |st a
+  DEBUG   control_unit:decode_execute ACC:    3524578 |AR:    17 |IP:    18 |DR:          3 |SP:   256 | TICK:     651 |ld c
+  DEBUG   control_unit:decode_execute ACC:    9227465 |AR:    18 |IP:    19 |DR:          1 |SP:   256 | TICK:     655 |add a
+  DEBUG   control_unit:decode_execute ACC:    9227465 |AR:    19 |IP:    20 |DR:          2 |SP:   256 | TICK:     660 |st b
+  DEBUG   control_unit:decode_execute ACC:    9227465 |AR:    20 |IP:     6 |DR:          6 |SP:   256 | TICK:     662 |jmp loop
+  DEBUG   control_unit:decode_execute ACC:    9227465 |AR:     6 |IP:     7 |DR:          5 |SP:   256 | TICK:     666 |cmp limit
+  DEBUG   control_unit:decode_execute ACC:    9227465 |AR:     7 |IP:    21 |DR:         21 |SP:   256 | TICK:     668 |jne end
+  DEBUG   control_unit:decode_execute ACC:    4613732 |AR:    21 |IP:    22 |DR:          4 |SP:   256 | TICK:     672 |ld sum
+  DEBUG   control_unit:decode_execute ACC:    4613732 |AR:    22 |IP:    23 |DR:          4 |SP:   256 | TICK:     673 |out
+  DEBUG   control_unit:decode_execute ACC:    4613732 |AR:    23 |IP:    24 |DR:          4 |SP:   256 | TICK:     674 |hlt
