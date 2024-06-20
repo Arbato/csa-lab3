@@ -31,7 +31,7 @@ source_code: |
 stdin: |
 
 stdout: |
-  source LoC: 29 code instr: 24
+  source LoC: 27 code instr: 24
   4613732
 out_code: |
   [{"index": 0, "opcode": "jmp", "arg": 6, "term": [5, 0, "Jump to start"], "adr": "direct"},

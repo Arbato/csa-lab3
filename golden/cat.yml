@@ -23,7 +23,7 @@ source_code: |
 stdin: |
   abc
 stdout: |
-  source LoC: 29 code instr: 15
+  source LoC: 17 code instr: 15
   abc
 
 out_code: |

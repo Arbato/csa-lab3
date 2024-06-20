@@ -20,7 +20,7 @@ source_code: |
 
 stdin: |
 stdout: |
-  source LoC: 29 code instr: 26
+  source LoC: 17 code instr: 26
   Hello world!
 
 out_code: |
