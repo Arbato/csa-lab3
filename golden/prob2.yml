@@ -1,32 +1,32 @@
 source_code: |
   .data
-  a: 1
-  b: 1
-  c: 0
-  sum: 0
-  limit: 4000000
+    a: 1
+    b: 1
+    c: 0
+    sum: 0
+    limit: 4000000
   .instructions
-  loop:
-  ;check 4million
-  cmp limit
-  jne end
-  ld a
-  add b
-  st c
-  ld c
-  add sum
-  st sum
-  ld b
-  add c
-  st a
-  ld c
-  add a
-  st b
-  jmp loop
-  end:
-  ld sum
-  out
-  hlt
+    loop:
+      ;check 4million
+      cmp limit
+      jne end
+      ld a
+      add b
+      st c
+      ld c
+      add sum
+      st sum
+      ld b
+      add c
+      st a
+      ld c
+      add a
+      st b
+    jmp loop
+    end:
+      ld sum
+      out
+      hlt
 
 stdin: |
 stdout: |

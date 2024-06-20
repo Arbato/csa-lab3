@@ -1,20 +1,20 @@
 source_code: |
   .data
-  msg: "Hello world!"
-  index: 1 
+    msg: "Hello world!"
+    index: 1 
   .instructions
   looop:
-  ld $msg
-  add index
-  ald
-  out
-  ld index
-  sub msg
-  jz ext
-  inc index
+    ld $msg
+    add index
+    ald
+    out
+    ld index
+    sub msg
+    jz ext
+    inc index
   jmp looop
   ext:
-  hlt
+    hlt
 
 
 stdin: |
