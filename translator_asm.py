@@ -181,7 +181,7 @@ def main(source: str, target: str):
     lines = trimmer(lines)
     code = translate(lines)
     write_code(target, code)
-    print("source LoC:", len(source), "code instr:", len(code))
+    print("source LoC:", len(lines), "code instr:", len(code))
 
 
 if __name__ == "__main__":
