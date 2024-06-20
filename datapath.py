@@ -9,10 +9,11 @@ class DataPath:
         self.ip = 0
         self.N = 0
         self.Z = 0
+        self.tick = 0
 
     def __str__(self):
         return (
-            f"ACC: {self.acc:10} |" f"AR: {self.ar:5} |" f"IP: {self.ip:5} |" f"DR: {self.dr:10} |" f"SP: {self.sp:5} |"
+            f"ACC: {self.acc:10} |" f"AR: {self.ar:5} |" f"IP: {self.ip:5} |" f"DR: {self.dr:10} |" f"SP: {self.sp:5} | " f"TICK: {self.tick:7} |"
         )
 
     def load_instr_from_memory(self):
