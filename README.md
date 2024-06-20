@@ -212,3 +212,19 @@ sum: 0
 ## Тестирование
  - Тестирование осуществляется при помощи golden test-ов.
  
+Golden тесты:
+* [hello world](./golden/hello_world.yml)
+* [cat](./golden/cat.yml)
+* [hello user](./golden/hello_user.yml)
+* [prob2](./golden/prob2.yml)
+
+
+## Аналитика
+
+```text
+| Арбатова Ксения Владимировна  | hello | 1         | -             | 17            | 26       | 224     | asm | acc | neum | hw | instr | struct | stream | mem | pstr | prob2
+
+| Арбатова Ксения Владимировна  | cat   | 4         | -             | 19            | 15       | 84      | asm | acc | neum | hw | instr | struct | stream | mem | pstr | prob2
+
+| Арбатова Ксения Владимировна | prob2 | 15        | -             | 27            | 24      | 674     | asm | acc | neum | hw | instr | struct | stream | mem | pstr | prob2
+```
