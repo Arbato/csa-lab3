@@ -6,7 +6,7 @@ labels = {}
 
 
 def get_meaningful_token(line):
-    """Get rid of comment"""
+    """Избавление от комментариев"""
     return line.split(";", 1)[0].strip()
 
 
@@ -34,10 +34,36 @@ def section_split(source):
     return data, code
 
 
+def clean_code(code):
+    if "$" in code["arg"] or code["opcode"] in Opcode.direct_opcodes:
+        code["adr"] = "direct"
+        try:
+            code["arg"] = int(code["arg"].strip("$"))
+        except ValueError:
+            code["arg"] = code["arg"].strip("$")
+
+    elif "@" in code["arg"]:
+        code["adr"] = "stack"
+        try:
+            code["arg"] = int(code["arg"].strip("@"))
+        except ValueError:
+            code["arg"] = code["arg"].strip("@")
+    elif "#" in code["arg"]:
+        code["adr"] = "relative"
+        try:
+            code["arg"] = int(code["arg"].strip("#"))
+        except ValueError:
+            code["arg"] = code["arg"].strip("#")
+    else:
+        code["adr"] = "indirect"
+    
+    return code
+
+
 def translate_stage_1(data, text):
     code = []
     for line_num, raw_line in enumerate(text, 1):
-        token = raw_line  # get_meaningful_token(raw_line)
+        token = raw_line
         if token == "":
             continue
 
@@ -52,36 +78,13 @@ def translate_stage_1(data, text):
             assert len(sub_tokens) == 2, "Invalid instruction: {}".format(token)
             mnemonic, arg = sub_tokens
             opcode = Opcode(mnemonic)
-            assert opcode in Opcode.opcodes_with_arg  #  "instructions take an argument"
-            if "$" in arg or opcode in Opcode.direct_opcodes:
-                try:
-                    code.append(
-                        {
-                            "index": pc,
-                            "opcode": opcode,
-                            "arg": int(arg.strip("$")),
-                            "term": Term(line_num, 0, token),
-                            "direct": True,
-                        }
-                    )
-                except ValueError:
-                    code.append(
-                        {
-                            "index": pc,
-                            "opcode": opcode,
-                            "arg": arg.strip("$"),
-                            "term": Term(line_num, 0, token),
-                            "direct": True,
-                        }
-                    )
+            assert opcode in Opcode.opcodes_with_arg
 
-            else:
-                code.append(
-                    {"index": pc, "opcode": opcode, "arg": arg, "term": Term(line_num, 0, token), "direct": False}
-                )
+            code.append(clean_code({"index": pc, "opcode": opcode, "arg": arg, "term": Term(line_num, 0, token)}))
+
         else:  # токен содержит инструкцию без операндов
             opcode = Opcode(token)
-            code.append({"index": pc, "opcode": opcode, "term": Term(line_num, 0, token), "direct": False})
+            code.append({"index": pc, "opcode": opcode, "term": Term(line_num, 0, token), "adr": "indirect"})
 
     return code
 
@@ -92,19 +95,24 @@ def translate_stage_2(labels, code: list):
     for instruction in code:
         if "arg" in instruction:
             label = instruction["arg"]
-            if not instruction["direct"] or isinstance(label, str):
-                assert label in labels, "Label not defined: " + label
+            if "adr" in instruction:
+                if instruction["adr"] != "direct" or isinstance(label, str):
+                    assert label in labels, "Label not defined: " + label
+                    instruction["arg"] = labels[label]
+
+            elif isinstance(label, str):
                 instruction["arg"] = labels[label]
     return code
 
 
 def data_translate_stage_1(text):
     """
-    converts data that looks like
+
+    Конвертирует данные из вида
     ["int: 123",
     "msg: "hi""
     ]
-    to
+    в такой вид:
     [{index 0, opcode: "jmp",  arg: 5 },
      {index 1, arg: 123 },
      {index 2, arg: 2},
@@ -144,7 +152,13 @@ def data_translate_stage_1(text):
 
     code.insert(
         0,
-        {"index": 0, "opcode": "jmp", "arg": len(code) + 1, "term": Term(line_num, 0, "Jump to start"), "direct": True},
+        {
+            "index": 0,
+            "opcode": "jmp",
+            "arg": len(code) + 1,
+            "term": Term(line_num, 0, "Jump to start"),
+            "adr": "direct",
+        },
     )
 
     return code
